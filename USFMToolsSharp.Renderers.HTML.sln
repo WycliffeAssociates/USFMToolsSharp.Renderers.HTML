@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29123.88
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "USFMToolsSharp.Renderers.HTML", "USFMToolsSharp.Renderers.HTML\USFMToolsSharp.Renderers.HTML.csproj", "{460BFDAF-74E3-4DAF-935D-7F55C2515B15}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "USFMToolsSharp.Renderers.HTML.Tests", "USFMToolsSharp.Renderers.HTML.Tests\USFMToolsSharp.Renderers.HTML.Tests.csproj", "{2FFD6D74-5C8E-41B2-A476-6BCF42DC3FA3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{460BFDAF-74E3-4DAF-935D-7F55C2515B15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{460BFDAF-74E3-4DAF-935D-7F55C2515B15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{460BFDAF-74E3-4DAF-935D-7F55C2515B15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{460BFDAF-74E3-4DAF-935D-7F55C2515B15}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2FFD6D74-5C8E-41B2-A476-6BCF42DC3FA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FFD6D74-5C8E-41B2-A476-6BCF42DC3FA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2FFD6D74-5C8E-41B2-A476-6BCF42DC3FA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FFD6D74-5C8E-41B2-A476-6BCF42DC3FA3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DB09931F-64F4-418D-8ECD-692728DC4F78}
+	EndGlobalSection
+EndGlobal
