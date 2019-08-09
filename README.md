@@ -1,3 +1,9 @@
+![GitHub](https://img.shields.io/github/license/WycliffeAssociates/USFMToolsSharp.Renderers.HTML?color=blue)
+![Travis (.com) branch](https://img.shields.io/travis/com/WycliffeAssociates/USFMToolsSharp.Renderers.HTML/master)
+![Nuget](https://img.shields.io/nuget/v/USFMToolsSharp.Renderers.HTML?color=blue)
+![Nuget](https://img.shields.io/nuget/dt/USFMToolsSharp.Renderers.HTML?color=blue)
+
+
 # USFMToolsSharp.Renderers.HTML
 A .net HTML rendering tool for USFM.
 

@@ -2,10 +2,24 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>0.1.1</Version>
+    <Authors>@rbnswartz; @BryanHo10</Authors>
+    <Company>Wycliffe Associates</Company>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageProjectUrl>https://github.com/WycliffeAssociates/USFMToolsSharp.Renderers.HTML</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/WycliffeAssociates/USFMToolsSharp.Renderers.HTML</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="USFMToolsSharp" Version="0.8.0" />
+    <PackageReference Include="USFMToolsSharp" Version="0.9.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
