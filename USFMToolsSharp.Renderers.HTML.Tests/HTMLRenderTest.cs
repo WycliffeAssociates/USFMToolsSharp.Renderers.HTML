@@ -6,7 +6,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using USFMToolsSharp;
 using USFMToolsSharp.Models;
+using USFMToolsSharp.Renderers.HTML;
 
 namespace USFMToolsSharpTest
 {
@@ -15,7 +17,7 @@ namespace USFMToolsSharpTest
     public class HTMLRenderTest
     {
         private USFMToolsSharp.USFMParser parser;
-        private USFMToolsSharp.HtmlRenderer render;
+        private HtmlRenderer render;
         private HTMLConfig configHTML;
 
         [TestInitialize]
@@ -23,8 +25,8 @@ namespace USFMToolsSharpTest
         {
             configHTML = new HTMLConfig(new List<string>(), partialHTML: true);
 
-            parser = new USFMToolsSharp.USFMParser();
-            render = new USFMToolsSharp.HtmlRenderer(configHTML);
+            parser = new USFMParser();
+            render = new HtmlRenderer(configHTML);
             
         }
         [TestMethod]

@@ -12,7 +12,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="USFMToolsSharp" Version="0.9.0" />
+    <PackageReference Include="USFMToolsSharp" Version="1.2.0" />
   </ItemGroup>
 
   <ItemGroup>

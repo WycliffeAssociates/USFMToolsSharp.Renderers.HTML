@@ -141,7 +141,7 @@ namespace USFMToolsSharp.Renderers.HTML
 
                     break;
                 case CAMarker cAMarker:
-                    output.AppendLine($"<span class=\"chaptermarker-alt\">({cAMarker.AltChapterCharacter})</span>");
+                    output.AppendLine($"<span class=\"chaptermarker-alt\">({cAMarker.AltChapterNumber})</span>");
                     break;
                 case CLMarker cLMarker:
                     currentChapterLabel = cLMarker.Label;
@@ -162,7 +162,7 @@ namespace USFMToolsSharp.Renderers.HTML
                     }
                     break;
                 case VAMarker vAMarker:
-                    output.AppendLine($"<span class=\"versemarker-alt\">({vAMarker.AltVerseCharacter})</span>");
+                    output.AppendLine($"<span class=\"versemarker-alt\">({vAMarker.AltVerseNumber})</span>");
                     break;
                 case QMarker qMarker:
                     output.AppendLine($"<div class=\"poetry-{qMarker.Depth}\">");
@@ -675,12 +675,10 @@ namespace USFMToolsSharp.Renderers.HTML
                 case WEndMarker _:
                 case RQEndMarker _:
                 case FVEndMarker _:
-                case FQEndMarker _:
                 case TLEndMarker _:
                 case SCEndMarker _:
                 case ADDEndMarker _:
                 case BKEndMarker _:
-                case FQAEndMarker _:
                 case FEndMarker _:
                 case IDEMarker _:
                 case VPMarker _:
