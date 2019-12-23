@@ -1,9 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetFramework>netstandard1.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>0.2.0</Version>
+    <Version>0.2.1</Version>
     <Authors>@rbnswartz; @BryanHo10</Authors>
     <Company>Wycliffe Associates</Company>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
