@@ -21,7 +21,7 @@ namespace USFMToolsSharp.Renderers.HTML
             blankColumn = false;
             partialHTML = false;
         }
-        public HTMLConfig(List<string> divClasses, bool separateChapters = false, bool partialHTML = false, bool blankColumn = false, bool separateVerses=false)
+        public HTMLConfig(List<string> divClasses, bool separateChapters = false, bool partialHTML = false, bool separateVerses=false, bool blankColumn = false)
         {
             this.divClasses = divClasses;
             this.separateChapters = separateChapters;
