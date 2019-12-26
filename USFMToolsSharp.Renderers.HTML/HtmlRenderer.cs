@@ -67,10 +67,22 @@ namespace USFMToolsSharp.Renderers.HTML
                 output.AppendLine($"<div class=\"{class_name}\">");
             }
 
+            // Will add a table with two columns where the second column will be blank
+            if(ConfigurationHTML.blankColumn)
+            {
+                output.AppendLine("<table class=\"blank_col\"><tr><td>");
+            }
+
             foreach (Marker marker in input.Contents)
             {
                 output.Append(RenderMarker(marker));
             }
+
+            if (ConfigurationHTML.blankColumn)
+            {
+                output.AppendLine("</td><td></td></tr></table>");
+            }
+
             foreach (string class_name in ConfigurationHTML.divClasses)
             {
                 output.AppendLine($"</div>");
