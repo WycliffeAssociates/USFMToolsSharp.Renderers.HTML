@@ -13,7 +13,8 @@ namespace USFMToolsSharp.Renderers.HTML
         public List<string> FootnoteTextTags;
         public List<string> CrossReferenceTags;
         public HTMLConfig ConfigurationHTML;
-        public string currentChapterLabel;        
+        public string currentChapterLabel;
+        private IList<string> TOCEntries;
 
         public string FrontMatterHTML { get; set; }
         public string InsertedFooter { get; set;}
@@ -25,6 +26,7 @@ namespace USFMToolsSharp.Renderers.HTML
             FootnoteTextTags = new List<string>();
             CrossReferenceTags = new List<string>();
             ConfigurationHTML = new HTMLConfig();
+            TOCEntries = new List<string>();
         }
         public HtmlRenderer(HTMLConfig config):this()
         {
@@ -73,10 +75,20 @@ namespace USFMToolsSharp.Renderers.HTML
                 output.AppendLine("<table class=\"blank_col\"><tr><td>");
             }
 
+            var bodyContent = new StringBuilder();
             foreach (Marker marker in input.Contents)
             {
-                output.Append(RenderMarker(marker));
+                bodyContent.Append(RenderMarker(marker));
             }
+
+            // render Table of Contents before body content
+            if (ConfigurationHTML.hasTOC)
+            {
+                output.AppendLine(RenderTOC());
+                output.AppendLine("<br/>");
+            }
+
+            output.Append(bodyContent);
 
             if (ConfigurationHTML.blankColumn)
             {
@@ -252,9 +264,10 @@ namespace USFMToolsSharp.Renderers.HTML
                     output.AppendLine("</span>");
                     break;
                 case HMarker hMarker:
-                    output.AppendLine("<div class=\"header\">");
+                    output.AppendLine(string.Format("<div class=\"header\" id=\"{0}\">", hMarker.HeaderText));
                     output.Append(hMarker.HeaderText);
                     output.AppendLine("</div>");
+                    TOCEntries.Add(hMarker.HeaderText);
                     break;
                 case MTMarker mTMarker:
                     output.AppendLine($"<div class=\"majortitle-{mTMarker.Weight}\">");
@@ -701,6 +714,7 @@ namespace USFMToolsSharp.Renderers.HTML
                     UnrenderableTags.Add(input.Identifier);
                     break;
             }
+
             return output.ToString();
         }
         private string RenderFootnotes()
@@ -737,6 +751,18 @@ namespace USFMToolsSharp.Renderers.HTML
                 return crossRefHTML.ToString();
             }
             return string.Empty;
+        }
+
+        public string RenderTOC()
+        {
+            var toc = new StringBuilder();
+            toc.AppendLine("<div class=\"toc\"><h2>Table of Contents</h3>");
+            foreach (var entry in TOCEntries)
+            {
+                toc.AppendLine(string.Format("<h3><a href=\"#{0}\">{0}</h4></a>", entry));
+            }
+            toc.AppendLine("</div>");
+            return toc.ToString();
         }
     }
 }
