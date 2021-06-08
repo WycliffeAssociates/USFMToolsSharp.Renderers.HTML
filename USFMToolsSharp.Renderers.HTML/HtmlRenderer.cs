@@ -756,11 +756,13 @@ namespace USFMToolsSharp.Renderers.HTML
         public string RenderTOC()
         {
             var toc = new StringBuilder();
-            toc.AppendLine("<div class=\"toc\"><h2>Table of Contents</h3>");
+            toc.AppendLine("<div class=\"toc\"><h2>Table of Contents</h2>");
+            toc.AppendLine("<ul>");
             foreach (var entry in TOCEntries)
             {
-                toc.AppendLine(string.Format("<h3><a href=\"#{0}\">{0}</h4></a>", entry));
+                toc.AppendLine(string.Format("<li><h3><a href=\"#{0}\">{0}</a></h3></li>", entry));
             }
+            toc.AppendLine("</ul>");
             toc.AppendLine("</div>");
             return toc.ToString();
         }
