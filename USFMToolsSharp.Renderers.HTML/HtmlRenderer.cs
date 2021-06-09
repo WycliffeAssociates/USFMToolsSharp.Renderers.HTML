@@ -63,49 +63,51 @@ namespace USFMToolsSharp.Renderers.HTML
                 output.AppendLine(FrontMatterHTML);
             }
 
+            var bodyContent = new StringBuilder();
+
             // HTML tags can only have one class, when render to docx
-            foreach(string class_name in ConfigurationHTML.divClasses)
+            foreach (string class_name in ConfigurationHTML.divClasses)
             {
-                output.AppendLine($"<div class=\"{class_name}\">");
+                bodyContent.AppendLine($"<div class=\"{class_name}\">");
             }
 
             // Will add a table with two columns where the second column will be blank
             if(ConfigurationHTML.blankColumn)
             {
-                output.AppendLine("<table class=\"blank_col\"><tr><td>");
+                bodyContent.AppendLine("<table class=\"blank_col\"><tr><td>");
             }
 
-            var bodyContent = new StringBuilder();
             foreach (Marker marker in input.Contents)
             {
                 bodyContent.Append(RenderMarker(marker));
             }
 
             // render Table of Contents before body content
-            if (ConfigurationHTML.hasTOC)
+            if (ConfigurationHTML.hasTOC && TOCEntries.Count > 0)
             {
                 output.AppendLine(RenderTOC());
                 output.AppendLine("<br/>");
             }
 
-            output.Append(bodyContent);
-
             if (ConfigurationHTML.blankColumn)
             {
-                output.AppendLine("</td><td></td></tr></table>");
+                bodyContent.AppendLine("</td><td></td></tr></table>");
             }
 
             foreach (string class_name in ConfigurationHTML.divClasses)
             {
-                output.AppendLine($"</div>");
+                bodyContent.AppendLine($"</div>");
             }
 
             if (!ConfigurationHTML.partialHTML)
             {
-                output.AppendLine(InsertedFooter);
-                output.AppendLine("</body>");
-                output.AppendLine("</html>");
+                bodyContent.AppendLine(InsertedFooter);
+                bodyContent.AppendLine("</body>");
+                bodyContent.AppendLine("</html>");
             }
+
+            output.Append(bodyContent);
+
             return output.ToString();
         }
         private string GetEncoding(USFMDocument input)
@@ -759,7 +761,7 @@ namespace USFMToolsSharp.Renderers.HTML
             return string.Empty;
         }
 
-        public string RenderTOC()
+        private string RenderTOC()
         {
             var toc = new StringBuilder();
             toc.AppendLine("<div class=\"toc\"><h2>Table of Contents</h2>");
