@@ -264,10 +264,9 @@ namespace USFMToolsSharp.Renderers.HTML
                     output.AppendLine("</span>");
                     break;
                 case HMarker hMarker:
-                    output.AppendLine(string.Format("<div class=\"header\" id=\"{0}\">", hMarker.HeaderText));
+                    output.AppendLine("<div class=\"header\">");
                     output.Append(hMarker.HeaderText);
                     output.AppendLine("</div>");
-                    TOCEntries.Add(hMarker.HeaderText);
                     break;
                 case MTMarker mTMarker:
                     output.AppendLine($"<div class=\"majortitle-{mTMarker.Weight}\">");
@@ -687,6 +686,13 @@ namespace USFMToolsSharp.Renderers.HTML
                     break;
                 case IDMarker idMarker:
                     currentChapterLabel = null;
+                    break;
+                case TOC3Marker tocMarker:
+                    string name = tocMarker.BookAbbreviation;
+                    output.Append("<div class=\"header\">"); // same as header format - nicer when navigate
+                    output.AppendLine($"<div class=\"toc3-ref\" id=\"{name}\">{name}");
+                    output.AppendLine("</div></div>");
+                    TOCEntries.Add(name);
                     break;
                 case IOREndMarker _:
                 case SUPEndMarker _:
