@@ -689,12 +689,13 @@ namespace USFMToolsSharp.Renderers.HTML
                 case IDMarker idMarker:
                     currentChapterLabel = null;
                     break;
-                case TOC3Marker tocMarker:
-                    string name = tocMarker.BookAbbreviation;
-                    output.Append("<div class=\"header\">"); // same as header format - nicer when navigate
-                    output.AppendLine($"<div class=\"toc3-ref\" id=\"{name}\">{name}</div>");
-                    output.AppendLine("</div>");
-                    TOCEntries.Add(name);
+                case TOC2Marker tocMarker:
+                    if (ConfigurationHTML.hasTOC)
+                    {
+                        string name = tocMarker.ShortTableOfContentsText;
+                        output.AppendLine($"<div class=\"toc2-ref\" id=\"{name}\"></div>");
+                        TOCEntries.Add(name);
+                    }
                     break;
                 case IOREndMarker _:
                 case SUPEndMarker _:
