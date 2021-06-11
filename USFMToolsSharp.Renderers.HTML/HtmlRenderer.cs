@@ -83,7 +83,7 @@ namespace USFMToolsSharp.Renderers.HTML
             }
 
             // render Table of Contents before body content
-            if (ConfigurationHTML.hasTOC && TOCEntries.Count > 0)
+            if (ConfigurationHTML.renderTableOfContents && TOCEntries.Count > 0)
             {
                 output.AppendLine(RenderTOC());
                 output.AppendLine("<br/>");
@@ -690,7 +690,7 @@ namespace USFMToolsSharp.Renderers.HTML
                     currentChapterLabel = null;
                     break;
                 case TOC2Marker tocMarker:
-                    if (ConfigurationHTML.hasTOC)
+                    if (ConfigurationHTML.renderTableOfContents)
                     {
                         string name = tocMarker.ShortTableOfContentsText;
                         output.AppendLine($"<div class=\"toc2-ref\" id=\"{name}\"></div>");

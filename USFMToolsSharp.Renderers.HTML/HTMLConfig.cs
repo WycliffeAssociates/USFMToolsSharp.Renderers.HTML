@@ -11,7 +11,7 @@ namespace USFMToolsSharp.Renderers.HTML
         public bool separateVerses;
         public bool blankColumn;
         public bool partialHTML;
-        public bool hasTOC;
+        public bool renderTableOfContents;
 
         public HTMLConfig()
         {
@@ -20,7 +20,7 @@ namespace USFMToolsSharp.Renderers.HTML
             separateVerses = false;
             blankColumn = false;
             partialHTML = false;
-            hasTOC = false;
+            renderTableOfContents = false;
         }
         public HTMLConfig(List<string> divClasses, bool separateChapters = false, bool partialHTML = false, bool separateVerses=false, bool blankColumn = false)
         {
