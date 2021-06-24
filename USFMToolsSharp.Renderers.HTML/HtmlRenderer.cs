@@ -13,7 +13,8 @@ namespace USFMToolsSharp.Renderers.HTML
         public List<string> FootnoteTextTags;
         public List<string> CrossReferenceTags;
         public HTMLConfig ConfigurationHTML;
-        public string currentChapterLabel;        
+        public string currentChapterLabel;
+        private IList<string> TOCEntries;
 
         public string FrontMatterHTML { get; set; }
         public string InsertedFooter { get; set;}
@@ -25,6 +26,7 @@ namespace USFMToolsSharp.Renderers.HTML
             FootnoteTextTags = new List<string>();
             CrossReferenceTags = new List<string>();
             ConfigurationHTML = new HTMLConfig();
+            TOCEntries = new List<string>();
         }
         public HtmlRenderer(HTMLConfig config):this()
         {
@@ -61,39 +63,51 @@ namespace USFMToolsSharp.Renderers.HTML
                 output.AppendLine(FrontMatterHTML);
             }
 
+            var bodyContent = new StringBuilder();
+
             // HTML tags can only have one class, when render to docx
-            foreach(string class_name in ConfigurationHTML.divClasses)
+            foreach (string class_name in ConfigurationHTML.divClasses)
             {
-                output.AppendLine($"<div class=\"{class_name}\">");
+                bodyContent.AppendLine($"<div class=\"{class_name}\">");
             }
 
             // Will add a table with two columns where the second column will be blank
             if(ConfigurationHTML.blankColumn)
             {
-                output.AppendLine("<table class=\"blank_col\"><tr><td>");
+                bodyContent.AppendLine("<table class=\"blank_col\"><tr><td>");
             }
 
             foreach (Marker marker in input.Contents)
             {
-                output.Append(RenderMarker(marker));
+                bodyContent.Append(RenderMarker(marker));
+            }
+
+            // render Table of Contents before body content
+            if (ConfigurationHTML.renderTableOfContents && TOCEntries.Count > 0)
+            {
+                output.AppendLine(RenderTOC());
+                output.AppendLine("<br/>");
             }
 
             if (ConfigurationHTML.blankColumn)
             {
-                output.AppendLine("</td><td></td></tr></table>");
+                bodyContent.AppendLine("</td><td></td></tr></table>");
             }
 
             foreach (string class_name in ConfigurationHTML.divClasses)
             {
-                output.AppendLine($"</div>");
+                bodyContent.AppendLine($"</div>");
             }
 
             if (!ConfigurationHTML.partialHTML)
             {
-                output.AppendLine(InsertedFooter);
-                output.AppendLine("</body>");
-                output.AppendLine("</html>");
+                bodyContent.AppendLine(InsertedFooter);
+                bodyContent.AppendLine("</body>");
+                bodyContent.AppendLine("</html>");
             }
+
+            output.Append(bodyContent);
+
             return output.ToString();
         }
         private string GetEncoding(USFMDocument input)
@@ -675,6 +689,14 @@ namespace USFMToolsSharp.Renderers.HTML
                 case IDMarker idMarker:
                     currentChapterLabel = null;
                     break;
+                case TOC2Marker tocMarker:
+                    if (ConfigurationHTML.renderTableOfContents)
+                    {
+                        string name = tocMarker.ShortTableOfContentsText;
+                        output.AppendLine($"<div class=\"toc2-ref\" id=\"{name}\"></div>");
+                        TOCEntries.Add(name);
+                    }
+                    break;
                 case IOREndMarker _:
                 case SUPEndMarker _:
                 case NDEndMarker _:
@@ -701,6 +723,7 @@ namespace USFMToolsSharp.Renderers.HTML
                     UnrenderableTags.Add(input.Identifier);
                     break;
             }
+
             return output.ToString();
         }
         private string RenderFootnotes()
@@ -737,6 +760,20 @@ namespace USFMToolsSharp.Renderers.HTML
                 return crossRefHTML.ToString();
             }
             return string.Empty;
+        }
+
+        private string RenderTOC()
+        {
+            var toc = new StringBuilder();
+            toc.AppendLine("<div class=\"toc\"><h2>Table of Contents</h2>");
+            toc.AppendLine("<ul>");
+            foreach (var entry in TOCEntries)
+            {
+                toc.AppendLine(string.Format("<li><h3><a href=\"#{0}\">{0}</a></h3></li>", entry));
+            }
+            toc.AppendLine("</ul>");
+            toc.AppendLine("</div>");
+            return toc.ToString();
         }
     }
 }
