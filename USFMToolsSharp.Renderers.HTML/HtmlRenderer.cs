@@ -15,6 +15,8 @@ namespace USFMToolsSharp.Renderers.HTML
         public HTMLConfig ConfigurationHTML;
         public string currentChapterLabel;
         private IList<string> TOCEntries;
+        private CMarker CurrentChapter;
+        private VMarker CurrentVerse;
 
         public string FrontMatterHTML { get; set; }
         public string InsertedFooter { get; set;}
@@ -133,7 +135,15 @@ namespace USFMToolsSharp.Renderers.HTML
                     output.AppendLine("</p>");
                     break;
                 case CMarker cMarker:
-                    output.AppendLine("<div class=\"chapter\">");
+                    CurrentChapter = cMarker;
+                    if (ConfigurationHTML.ChapterIdPattern == null)
+                    {
+                        output.AppendLine("<div class=\"chapter\">");
+                    }
+                    else
+                    {
+                        output.AppendLine($"<div id=\"{string.Format(ConfigurationHTML.ChapterIdPattern, cMarker.Number)}\" class=\"chapter\">");
+                    }
 
                     if (cMarker.GetChildMarkers<CLMarker>().Count > 0)
                     {
@@ -173,8 +183,9 @@ namespace USFMToolsSharp.Renderers.HTML
                     currentChapterLabel = cLMarker.Label;
                     break;
                 case VMarker vMarker:
+                    CurrentVerse = vMarker;
                     output.AppendLine($"<span class=\"verse\">");
-                    output.AppendLine($"<span class=\"versemarker\">{vMarker.VerseCharacter}</span>");
+                    output.AppendLine($"<sup class=\"versemarker\">{vMarker.VerseCharacter}</sup>");
                     foreach(Marker marker in input.Contents)
                     {
                         output.Append(RenderMarker(marker));
@@ -308,7 +319,7 @@ namespace USFMToolsSharp.Renderers.HTML
                             footnoteId = fMarker.FootNoteCaller;
                             break;
                     }
-                    string footnoteCallerHTML = $"<span class=\"caller\">{footnoteId}</span>";
+                    string footnoteCallerHTML = $"<sup class=\"caller\">{footnoteId}</sup>";
                     output.AppendLine(footnoteCallerHTML);
                     footnote.Append(footnoteCallerHTML);
                     foreach (Marker marker in input.Contents)

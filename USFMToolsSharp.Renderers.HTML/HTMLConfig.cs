@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using USFMToolsSharp.Models.Markers;
 
 namespace USFMToolsSharp.Renderers.HTML
 {
@@ -12,6 +13,8 @@ namespace USFMToolsSharp.Renderers.HTML
         public bool blankColumn;
         public bool partialHTML;
         public bool renderTableOfContents;
+        public string ChapterIdPattern;
+        public string VerseIdPattern;
 
         public HTMLConfig()
         {
