@@ -88,17 +88,17 @@ namespace USFMToolsSharpTest
             Assert.AreEqual("<div class=\"chapter\"><span class=\"chaptermarker\">1</span><span class=\"verse\"><sup class=\"versemarker\">1</sup>asdfasdf</span></div>", WrapTest("\\c 1  \\v 1 asdfasdf"));
 
             // References - Quoted book title - Parallel passage reference
-            Assert.AreEqual("<span class=\"verse\"><sup class=\"versemarker\">14</sup>Itulah sebabnya kata-kata ini ditulis dalam<span class=\"quoted-book\">Kitab Peperangan TUHAN,</span></span>", WrapTest("\\v 14 Itulah sebabnya kata-kata ini ditulis dalam \\bk Kitab Peperangan TUHAN,\\bk*"));
-            Assert.AreEqual("<span class=\"verse\"><sup class=\"versemarker\">5</sup>For God never said to any of his angels,<div class=\"poetry-1\">\"You are my Son;</div><div class=\"poetry-2\">today I have become your Father.\"</div><div class=\"reference\">Psa 2.7</div></span>", WrapTest("\\v 5 For God never said to any of his angels,\\q1 \"You are my Son;\\q2 today I have become your Father.\"\\rq Psa 2.7\\rq* "));
+            Assert.AreEqual("<span class=\"verse\"><sup class=\"versemarker\">14</sup>Itulah sebabnya kata-kata ini ditulis dalam <span class=\"quoted-book\">Kitab Peperangan TUHAN,</span></span>", WrapTest("\\v 14 Itulah sebabnya kata-kata ini ditulis dalam \\bk Kitab Peperangan TUHAN,\\bk*"));
+            Assert.AreEqual("<span class=\"verse\"><sup class=\"versemarker\">5</sup>For God never said to any of his angels,<div class=\"poetry-1\">\"You are my Son;</div><div class=\"poetry-2\">today I have become your Father.\"</div><div class=\"reference\">Psa 2.7</div> </span>", WrapTest("\\v 5 For God never said to any of his angels,\\q1 \"You are my Son;\\q2 today I have become your Father.\"\\rq Psa 2.7\\rq* "));
 
             // Closing - Selah
             Assert.AreEqual("<div class=\"closing\">[[ayt.co/Mat]]</div>", WrapTest("\\cls [[ayt.co/Mat]]"));
-            Assert.AreEqual("<span class=\"verse\"><sup class=\"versemarker\">3</sup>Allah datang dari negeri Teman<div class=\"poetry-2\">dan Yang Mahakudus datang dari Gunung Paran.<div class=\"selah-text\">Sela</div></div></span>", WrapTest("\\v 3 Allah datang dari negeri Teman \\q2 dan Yang Mahakudus datang dari Gunung Paran. \\qs Sela \\qs* "));
-            Assert.AreEqual("<div class=\"poetry-2\">dan sampai batu yang penghabisan.<div class=\"selah-text\">Sela</div></div>", WrapTest("\\q2 dan sampai batu yang penghabisan. \\qs Sela \\qs*"));
+            Assert.AreEqual("<span class=\"verse\"><sup class=\"versemarker\">3</sup>Allah datang dari negeri Teman <div class=\"poetry-2\">dan Yang Mahakudus datang dari Gunung Paran. <div class=\"selah-text\">Sela</div> </div></span>", WrapTest("\\v 3 Allah datang dari negeri Teman \\q2 dan Yang Mahakudus datang dari Gunung Paran. \\qs Sela \\qs* "));
+            Assert.AreEqual("<div class=\"poetry-2\">dan sampai batu yang penghabisan. <div class=\"selah-text\">Sela</div></div>", WrapTest("\\q2 dan sampai batu yang penghabisan. \\qs Sela \\qs*"));
 
             // Transliterated
-            Assert.AreEqual("<div class=\"chapter\"><span class=\"chaptermarker\">1</span><span class=\"verse\"><sup class=\"versemarker\">1</sup><sup class=\"caller\">1</sup></span></div><hr/><div class=\"footnotes\"><sup class=\"caller\">1</sup><b> 10:15 </b> DUNIA ORANG MATI: Dalam bahasa Yunani adalah<span class=\"transliterated\">Hades</span>, tempat orang setelah meninggal.</div>", WrapTest("\\c 1 \\v 1 \\f + \\fr 10:15 \\fk dunia orang mati \\ft Dalam bahasa Yunani adalah \\tl Hades\\tl* \\ft , tempat orang setelah meninggal.\\f*"));
-            Assert.AreEqual("<span class=\"verse\"><sup class=\"versemarker\">27</sup><span class=\"transliterated\">TEKEL</span>:</span>", WrapTest("\\v 27 \\tl TEKEL\\tl* :"));
+            Assert.AreEqual("<div class=\"chapter\"><span class=\"chaptermarker\">1</span><span class=\"verse\"><sup class=\"versemarker\">1</sup><sup class=\"caller\">1</sup></span></div><hr/><div class=\"footnotes\"><sup class=\"caller\">1</sup><b> 10:15 </b> DUNIA ORANG MATI: Dalam bahasa Yunani adalah <span class=\"transliterated\">Hades</span>, tempat orang setelah meninggal.</div>", WrapTest("\\c 1 \\v 1 \\f + \\fr 10:15 \\fk dunia orang mati \\ft Dalam bahasa Yunani adalah \\tl Hades\\tl* \\ft , tempat orang setelah meninggal.\\f*"));
+            Assert.AreEqual("<span class=\"verse\"><sup class=\"versemarker\">27</sup><span class=\"transliterated\">TEKEL</span> :</span>", WrapTest("\\v 27 \\tl TEKEL\\tl* :"));
         }
         [TestMethod]
         public void TestTableRender()
