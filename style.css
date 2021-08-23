@@ -223,10 +223,12 @@ table#hrdftrtbl {
 
 /* Section */
 .sectionhead-1 {
-    margin-top: 1em;
+    margin-top: 2em;
     font-size: 1.2em;
     font-weight: bold;
     display: block;
+    text-align: center;
+    text-transform: uppercase;
 }
 
 .sectionhead-2 {
