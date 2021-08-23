@@ -217,7 +217,7 @@ namespace USFMToolsSharpTest
         {
             render.ConfigurationHTML.blankColumn = true;
 
-            Assert.AreEqual("<table class=\"blank_col\"><tr><td><div class=\"chapter\"><span class=\"chaptermarker\">1</span><span class=\"verse\"><sup class=\"versemarker\">1</sup>First</span><span class=\"verse\"><sup class=\"versemarker\">2</sup>Second</span><span class=\"verse\"><sup class=\"versemarker\">3</sup>Third</span></div></td><td></td></tr></table>", WrapTest("\\c 1 \\v 1 First \\v 2 Second \\v 3 Third"));
+            Assert.AreEqual("<table class=\"blank_col\"><tr><td><div class=\"chapter\"><span class=\"chaptermarker\">1</span><span class=\"verse\"><sup class=\"versemarker\">1</sup>First </span><span class=\"verse\"><sup class=\"versemarker\">2</sup>Second </span><span class=\"verse\"><sup class=\"versemarker\">3</sup>Third</span></div></td><td></td></tr></table>", WrapTest("\\c 1 \\v 1 First \\v 2 Second \\v 3 Third"));
         }
         [TestMethod]
         public void TestUnknownMarkerRender()
