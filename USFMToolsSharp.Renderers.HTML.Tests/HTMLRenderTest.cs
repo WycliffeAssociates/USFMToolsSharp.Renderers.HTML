@@ -26,7 +26,7 @@ namespace USFMToolsSharpTest
 
             parser = new USFMParser();
             render = new HtmlRenderer(configHTML);
-            
+
         }
         [TestMethod]
         public void TestSectionRender()
@@ -35,7 +35,7 @@ namespace USFMToolsSharpTest
             Assert.AreEqual("<div class=\"sectionhead-1\">Silsilah Yesus Kristus </div><div class=\"section-reference\">(Luk. 3:23 - 38)</div>", WrapTest("\\s Silsilah Yesus Kristus \\r (Luk. 3:23 - 38)"));
             Assert.AreEqual("<div class=\"sectionhead-3\">Silsilah Yesus Kristus </div><div class=\"section-reference\">(Luk. 3:23 - 38)</div>", WrapTest("\\s3 Silsilah Yesus Kristus \\r (Luk. 3:23 - 38)"));
 
-            // Major Section 
+            // Major Section
             Assert.AreEqual("<div class=\"sectionhead-2\">jilid 1 </div><div class=\"major-section-reference\">(Mazmur 1 - 41)</div>", WrapTest("\\ms2 jilid 1 \\mr (Mazmur 1 - 41)"));
             Assert.AreEqual("<div class=\"sectionhead-3\">jilid 1 </div><div class=\"major-section-reference\">(Mazmur 1 - 41)</div>", WrapTest("\\ms3 jilid 1 \\mr (Mazmur 1 - 41)"));
             Assert.AreEqual("<div class=\"sectionhead-1\">jilid 1 </div><div class=\"major-section-reference\">(Mazmur 1 - 41)</div>", WrapTest("\\ms jilid 1 \\mr (Mazmur 1 - 41)"));
@@ -59,7 +59,7 @@ namespace USFMToolsSharpTest
             Assert.AreEqual("<div class=\"header\">1 John</div>", WrapTest("\\h 1 John"));
             Assert.AreEqual("<div class=\"header\"></div>", WrapTest("\\h"));
             Assert.AreEqual("<div class=\"header\"></div>", WrapTest("\\h      "));
-            
+
         }
         [TestMethod]
         public void TestChapterRender()
@@ -112,7 +112,7 @@ namespace USFMToolsSharpTest
             // Table Headers
             Assert.AreEqual("<div><table class=\"table-block\"><tr><td class=\"table-head\">dari suku Ruben</td><td class=\"table-head-right\">12.000</td></tr></table></div>", WrapTest("\\tr \\th1 dari suku Ruben \\thr2 12.000"));
 
-            
+
         }
         [TestMethod]
         public void TestListRender()
@@ -141,7 +141,7 @@ namespace USFMToolsSharpTest
 
             // Footnote Verse Marker - Paragraph
             Assert.AreEqual("<div class=\"chapter\"><span class=\"chaptermarker\">1</span><span class=\"verse\"><span class=\"versemarker\">1</span><span class=\"caller\">1</span></span></div><hr/><div class=\"footnotes\"><span class=\"caller\">1</span><b> 9:55 </b>Beberapa<span class=\"versemarker\">56</span>untuk menyelamatkan mereka.</div>", WrapTest("\\c 1 \\v 1 \\f + \\fr 9:55 \\ft Beberapa  \\fv 56 \\ft untuk menyelamatkan mereka.\\f*"));
-            
+
 
         }
         [TestMethod]
@@ -217,7 +217,7 @@ namespace USFMToolsSharpTest
         {
             render.ConfigurationHTML.blankColumn = true;
 
-            Assert.AreEqual("<table class=\"blank_col\"><tr><td><div class=\"chapter\"><span class=\"chaptermarker\">1</span><span class=\"verse\"><span class=\"versemarker\">1</span>First</span><span class=\"verse\"><span class=\"versemarker\">2</span>Second</span><span class=\"verse\"><span class=\"versemarker\">3</span>Third</span></div></td><td></td></tr></table>", WrapTest("\\c 1 \\v 1 First \\v 2 Second \\v 3 Third"));
+            Assert.AreEqual("<table class=\"blank_col\"><tr><td><div class=\"chapter\"><span class=\"chaptermarker\">1</span><span class=\"verse\"><sup class=\"versemarker\">1</sup>First</span><span class=\"verse\"><sup class=\"versemarker\">2</sup>Second</span><span class=\"verse\"><sup class=\"versemarker\">3</sup>Third</span></div></td><td></td></tr></table>", WrapTest("\\c 1 \\v 1 First \\v 2 Second \\v 3 Third"));
         }
         [TestMethod]
         public void TestUnknownMarkerRender()
