@@ -199,7 +199,7 @@ namespace USFMToolsSharp.Renderers.HTML
                     }
                     break;
                 case VAMarker vAMarker:
-                    output.AppendLine($"<span class=\"versemarker-alt\">({vAMarker.AltVerseNumber})</span>");
+                    output.AppendLine($"<sup class=\"versemarker-alt\">({vAMarker.AltVerseNumber})</sup>");
                     break;
                 case QMarker qMarker:
                     output.AppendLine($"<div class=\"poetry-{qMarker.Depth}\">");
@@ -421,7 +421,7 @@ namespace USFMToolsSharp.Renderers.HTML
                             crossId = xMarker.CrossRefCaller;
                             break;
                     }
-                    string crossCallerHTML = $"<span class=\"caller\">{crossId}</span>";
+                    string crossCallerHTML = $"<sup class=\"caller\">{crossId}</sup>";
                     output.AppendLine(crossCallerHTML);
                     crossRef.AppendLine(crossCallerHTML);
                     foreach (Marker marker in input.Contents)
@@ -456,7 +456,7 @@ namespace USFMToolsSharp.Renderers.HTML
                     output.Append("</span>");
                     break;
                 case FVMarker fVMarker:
-                    output.AppendLine($"<span class=\"versemarker\">{fVMarker.VerseCharacter}</span>");
+                    output.AppendLine($"<sup class=\"versemarker\">{fVMarker.VerseCharacter}</sup>");
                     break;
                 case TableBlock table:
                     output.AppendLine("<div>");
