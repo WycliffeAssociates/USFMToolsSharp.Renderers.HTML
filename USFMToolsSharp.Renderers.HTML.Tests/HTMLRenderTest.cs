@@ -32,16 +32,16 @@ namespace USFMToolsSharpTest
         public void TestSectionRender()
         {
             // Section Headings
-            Assert.AreEqual("<div class=\"sectionhead-1\">Silsilah Yesus Kristus</div><div class=\"section-reference\">(Luk. 3:23 - 38)</div>", WrapTest("\\s Silsilah Yesus Kristus \\r (Luk. 3:23 - 38)"));
-            Assert.AreEqual("<div class=\"sectionhead-3\">Silsilah Yesus Kristus</div><div class=\"section-reference\">(Luk. 3:23 - 38)</div>", WrapTest("\\s3 Silsilah Yesus Kristus \\r (Luk. 3:23 - 38)"));
+            Assert.AreEqual("<div class=\"sectionhead-1\">Silsilah Yesus Kristus </div><div class=\"section-reference\">(Luk. 3:23 - 38)</div>", WrapTest("\\s Silsilah Yesus Kristus \\r (Luk. 3:23 - 38)"));
+            Assert.AreEqual("<div class=\"sectionhead-3\">Silsilah Yesus Kristus </div><div class=\"section-reference\">(Luk. 3:23 - 38)</div>", WrapTest("\\s3 Silsilah Yesus Kristus \\r (Luk. 3:23 - 38)"));
 
             // Major Section 
-            Assert.AreEqual("<div class=\"sectionhead-2\">jilid 1</div><div class=\"major-section-reference\">(Mazmur 1 - 41)</div>", WrapTest("\\ms2 jilid 1 \\mr (Mazmur 1 - 41)"));
-            Assert.AreEqual("<div class=\"sectionhead-3\">jilid 1</div><div class=\"major-section-reference\">(Mazmur 1 - 41)</div>", WrapTest("\\ms3 jilid 1 \\mr (Mazmur 1 - 41)"));
-            Assert.AreEqual("<div class=\"sectionhead-1\">jilid 1</div><div class=\"major-section-reference\">(Mazmur 1 - 41)</div>", WrapTest("\\ms jilid 1 \\mr (Mazmur 1 - 41)"));
+            Assert.AreEqual("<div class=\"sectionhead-2\">jilid 1 </div><div class=\"major-section-reference\">(Mazmur 1 - 41)</div>", WrapTest("\\ms2 jilid 1 \\mr (Mazmur 1 - 41)"));
+            Assert.AreEqual("<div class=\"sectionhead-3\">jilid 1 </div><div class=\"major-section-reference\">(Mazmur 1 - 41)</div>", WrapTest("\\ms3 jilid 1 \\mr (Mazmur 1 - 41)"));
+            Assert.AreEqual("<div class=\"sectionhead-1\">jilid 1 </div><div class=\"major-section-reference\">(Mazmur 1 - 41)</div>", WrapTest("\\ms jilid 1 \\mr (Mazmur 1 - 41)"));
 
             // References
-            Assert.AreEqual("<div class=\"sectionhead-2\">jilid 1</div><div class=\"major-section-reference\">(Mazmur)</div>", WrapTest("\\ms2 jilid 1 \\mr (Mazmur)"));
+            Assert.AreEqual("<div class=\"sectionhead-2\">jilid 1 </div><div class=\"major-section-reference\">(Mazmur)</div>", WrapTest("\\ms2 jilid 1 \\mr (Mazmur)"));
 
         }
         [TestMethod]
