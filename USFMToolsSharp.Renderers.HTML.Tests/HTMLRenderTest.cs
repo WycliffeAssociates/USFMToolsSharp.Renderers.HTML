@@ -126,13 +126,13 @@ namespace USFMToolsSharpTest
         public void TestFootnoteRender()
         {
             // Footnote Caller - Text - Alternate Translation
-            Assert.AreEqual("<span class=\"verse\"><sup class=\"versemarker\">26</sup>This is a footnote<sup class=\"caller\">1</sup></span>", WrapTest("\\v 26 This is a footnote \\f + \\f*"));
-            Assert.AreEqual("<span class=\"verse\"><sup class=\"versemarker\">26</sup>God said, \"Let us make man in our image, after our likeness. Let them have dominion over the fish of the sea, over the birds of the sky, over the livestock, over all the earth, and over every creeping thing that creeps on the earth.\"<sup class=\"caller\">2</sup></span>", WrapTest("\\v 26 God said, \"Let us make man in our image, after our likeness. Let them have dominion over the fish of the sea, over the birds of the sky, over the livestock, over all the earth, and over every creeping thing that creeps on the earth.\" \\f + \\ft Some ancient copies have: \\fqa ... Over the livestock, over all the animals of the earth, and over every creeping thing that creeps on the earth \\fqa*  . \\f*"));
-            Assert.AreEqual("<span class=\"verse\"><sup class=\"versemarker\">1</sup>Sam Paul!<sup class=\"caller\">3</sup></span>", WrapTest("\\v 1 Sam Paul! \\f + \\ft Sample Simple Footnote. \\f*"));
+            Assert.AreEqual("<span class=\"verse\"><sup class=\"versemarker\">26</sup>This is a footnote <sup class=\"caller\">1</sup></span>", WrapTest("\\v 26 This is a footnote \\f + \\f*"));
+            Assert.AreEqual("<span class=\"verse\"><sup class=\"versemarker\">26</sup>God said, \"Let us make man in our image, after our likeness. Let them have dominion over the fish of the sea, over the birds of the sky, over the livestock, over all the earth, and over every creeping thing that creeps on the earth.\" <sup class=\"caller\">2</sup></span>", WrapTest("\\v 26 God said, \"Let us make man in our image, after our likeness. Let them have dominion over the fish of the sea, over the birds of the sky, over the livestock, over all the earth, and over every creeping thing that creeps on the earth.\" \\f + \\ft Some ancient copies have: \\fqa ... Over the livestock, over all the animals of the earth, and over every creeping thing that creeps on the earth \\fqa*  . \\f*"));
+            Assert.AreEqual("<span class=\"verse\"><sup class=\"versemarker\">1</sup>Sam Paul! <sup class=\"caller\">3</sup></span>", WrapTest("\\v 1 Sam Paul! \\f + \\ft Sample Simple Footnote. \\f*"));
 
             //Footnote Keyword - Reference - Verse Marker
             // Footnote Caller
-            Assert.AreEqual("<div class=\"chapter\"><span class=\"chaptermarker\">1</span><span class=\"verse\"><sup class=\"versemarker\">1</sup><sup class=\"caller\">4</sup></span></div><hr/><div class=\"footnotes\"><sup class=\"caller\">1</sup></div><div class=\"footnotes\"><sup class=\"caller\">2</sup>Some ancient copies have:<span class=\"footnote-alternate-translation\">... Over the livestock, over all the animals of the earth, and over every creeping thing that creeps on the earth</span></div><div class=\"footnotes\"><sup class=\"caller\">3</sup>Sample Simple Footnote.</div><div class=\"footnotes\"><sup class=\"caller\">4</sup>Sample Simple Footnote.</div>", WrapTest("\\c 1 \\v 1 \\f + \\ft Sample Simple Footnote. \\f*"));
+            Assert.AreEqual("<div class=\"chapter\"><span class=\"chaptermarker\">1</span><span class=\"verse\"><sup class=\"versemarker\">1</sup><sup class=\"caller\">4</sup></span></div><hr/><div class=\"footnotes\"><sup class=\"caller\">1</sup></div><div class=\"footnotes\"><sup class=\"caller\">2</sup>Some ancient copies have: <span class=\"footnote-alternate-translation\">... Over the livestock, over all the animals of the earth, and over every creeping thing that creeps on the earth</span></div><div class=\"footnotes\"><sup class=\"caller\">3</sup>Sample Simple Footnote.</div><div class=\"footnotes\"><sup class=\"caller\">4</sup>Sample Simple Footnote.</div>", WrapTest("\\c 1 \\v 1 \\f + \\ft Sample Simple Footnote. \\f*"));
             Assert.AreEqual("<div class=\"chapter\"><span class=\"chaptermarker\">1</span><span class=\"verse\"><sup class=\"versemarker\">1</sup><sup class=\"caller\"></sup></span></div><hr/><div class=\"footnotes\"><sup class=\"caller\"></sup>Sample Simple Footnote.</div>", WrapTest("\\c 1 \\v 1 \\f - \\ft Sample Simple Footnote. \\f*"));
             Assert.AreEqual("<div class=\"chapter\"><span class=\"chaptermarker\">1</span><span class=\"verse\"><sup class=\"versemarker\">1</sup><sup class=\"caller\">abc</sup></span></div><hr/><div class=\"footnotes\"><sup class=\"caller\">abc</sup>Sample Simple Footnote.</div>", WrapTest("\\c 1 \\v 1 \\f abc \\ft Sample Simple Footnote. \\f*"));
 
@@ -162,8 +162,8 @@ namespace USFMToolsSharpTest
         [TestMethod]
         public void TestVPRender()
         {
-            Assert.AreEqual("<span class=\"verse\"><sup class=\"versemarker\">1a</sup>This is not Scripture</span>", WrapTest("\\v 1 \\vp 1a \\vp* This is not Scripture"));
-            Assert.AreEqual("<span class=\"verse\"><sup class=\"versemarker\">2b</sup>This is not Scripture</span>", WrapTest("\\v 2 \\vp 2b \\vp* This is not Scripture"));
+            Assert.AreEqual("<span class=\"verse\"><sup class=\"versemarker\">1a</sup> This is not Scripture</span>", WrapTest("\\v 1 \\vp 1a \\vp* This is not Scripture"));
+            Assert.AreEqual("<span class=\"verse\"><sup class=\"versemarker\">2b</sup> This is not Scripture</span>", WrapTest("\\v 2 \\vp 2b \\vp* This is not Scripture"));
         }
         [TestMethod]
         public void TestWordEntryRender()
