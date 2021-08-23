@@ -125,6 +125,14 @@ table#hrdftrtbl {
     display: inline-block;
 }
 
+.acrostic-heading {
+    display: block;
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-top: 2em;
+    margin-bottom: 1em;
+}
+
 /* Major Title */
 .majortitle-1 {
     display: none;
