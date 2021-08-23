@@ -287,8 +287,9 @@ table#hrdftrtbl {
     text-align: center;
 }
 
-.desctiptive-title {
+.descriptive-text {
     font-style: italic;
+    font-size: 85%;
 }
 
 .word-entry {
