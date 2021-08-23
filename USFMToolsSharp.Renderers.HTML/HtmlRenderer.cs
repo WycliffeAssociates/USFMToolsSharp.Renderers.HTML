@@ -575,6 +575,9 @@ namespace USFMToolsSharp.Renderers.HTML
                 case QACMarker qACMarker:
                     output.AppendLine($"<span class=\"acrostic-letter\">{qACMarker.AcrosticLetter}</span>");
                     break;
+                case QAMarker qAMarker:
+                    output.AppendLine($"<span class=\"acrostic-heading\">{qAMarker.Heading}</span>");
+                    break;
                 case QMMarker qMMarker:
                     output.Append($"<div class=\"embedded-poetry-{qMMarker.Depth}\">");
                     foreach (Marker marker in input.Contents)

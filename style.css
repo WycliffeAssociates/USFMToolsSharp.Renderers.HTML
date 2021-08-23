@@ -125,6 +125,14 @@ table#hrdftrtbl {
     display: inline-block;
 }
 
+.acrostic-heading {
+    display: block;
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-top: 2em;
+    margin-bottom: 1em;
+}
+
 /* Major Title */
 .majortitle-1 {
     display: none;
@@ -223,10 +231,12 @@ table#hrdftrtbl {
 
 /* Section */
 .sectionhead-1 {
-    margin-top: 1em;
+    margin-top: 2em;
     font-size: 1.2em;
     font-weight: bold;
     display: block;
+    text-align: center;
+    text-transform: uppercase;
 }
 
 .sectionhead-2 {
@@ -287,8 +297,9 @@ table#hrdftrtbl {
     text-align: center;
 }
 
-.desctiptive-title {
+.descriptive-text {
     font-style: italic;
+    font-size: 85%;
 }
 
 .word-entry {

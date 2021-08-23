@@ -228,6 +228,15 @@ namespace USFMToolsSharpTest
             Assert.AreEqual("", WrapTest("\\123 sdfgsgdfg"));
 
         }
+        [TestMethod]
+        public void TestAcrosticHeadingRender()
+        {
+            Assert.AreEqual(
+                "<span class=\"acrostic-heading\">BETH</span>",
+                WrapTest("\\qa BETH")
+            );
+        }
+
         public string stripWhiteSpace(string input)
         {
             return input.Replace("\r", "").Replace("\n", "");
