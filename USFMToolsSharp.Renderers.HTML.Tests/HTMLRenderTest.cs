@@ -65,9 +65,9 @@ namespace USFMToolsSharpTest
         public void TestChapterRender()
         {
 
+            // Chapter Numbers
             Assert.AreEqual("<div class=\"chapter\"><span class=\"chaptermarker\">1</span></div>", WrapTest("\\c 1"));
             Assert.AreEqual("<div class=\"chapter\"><span class=\"chaptermarker\">1000</span></div>", WrapTest("\\c 1000"));
-            Assert.AreEqual("<div class=\"chapter\"><span class=\"chaptermarker\">-1</span></div>", WrapTest("\\c -1"));
             Assert.AreEqual("<div class=\"chapter\"><span class=\"chaptermarker\">0</span></div>", WrapTest("\\c 0"));
 
             // Chapter Labels
