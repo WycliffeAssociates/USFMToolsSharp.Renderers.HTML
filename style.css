@@ -187,22 +187,30 @@ table#hrdftrtbl {
     font-size: inherit;
     line-break: normal;
     display: block;
-    text-indent: 0px !important;
+    margin-left: 1.5em;
 }
 
 .poetry-2 {
     font-size: inherit;
     line-break: normal;
     display: block;
-    text-indent: 30px !important;
+    margin-left: 3em;
 }
 
 .poetry-3 {
     font-size: inherit;
     line-break: normal;
     display: block;
-    text-indent: 50px !important;
+    margin-left: 4.5em;
 }
+
+.poetry-1__revert {
+    margin-left: -1.5em;   
+}
+
+.poetry-2__revert {
+    margin-left: -3em;
+} 
 
 .selah-text {
     font-style: italic;
