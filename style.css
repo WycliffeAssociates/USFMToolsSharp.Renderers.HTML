@@ -172,6 +172,7 @@ table#hrdftrtbl {
 .chapter {
     margin-top: 1em;
     font-size: inherit;
+    position: relative;
 }
 
 .chaptermarker {
@@ -187,21 +188,29 @@ table#hrdftrtbl {
     font-size: inherit;
     line-break: normal;
     display: block;
-    text-indent: 0px !important;
+    margin-left: 1.5em;
 }
 
 .poetry-2 {
     font-size: inherit;
     line-break: normal;
     display: block;
-    text-indent: 30px !important;
+    margin-left: 3em;
 }
 
 .poetry-3 {
     font-size: inherit;
     line-break: normal;
     display: block;
-    text-indent: 50px !important;
+    margin-left: 4.5em;
+}
+
+.poetry-outdent-1 {
+    margin-left: -1.5em;   
+}
+
+.poetry-outdent-2 {
+    margin-left: -3em;
 }
 
 .selah-text {
@@ -219,6 +228,11 @@ table#hrdftrtbl {
     font-size: 0.5em;
     vertical-align: top;
     mso-text-raise: 60%;
+}
+
+[class^="poetry-"] .versemarker {
+    position: absolute;
+    left: 0;
 }
 
 .closing {
