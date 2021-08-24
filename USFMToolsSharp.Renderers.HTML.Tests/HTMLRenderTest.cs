@@ -239,19 +239,27 @@ namespace USFMToolsSharpTest
         [TestMethod]
         public void TestNestedPoetryRender()
         {
-            var nestedQMarkers = 
-                "\\q1 \\v 12 Verse twelve text\n" +
-                "\\q1 verse twelve text\n" +
-                "\\q2 end verse twelve.";
+            // q1 is a poetry block
+            var ascendingNested = 
+                "\\q1 \\v 12 Verse twelve text lv1\n" +
+                "\\q2 verse twelve text lv2" +
+                "\\q3 verse twelve text lv3.";
+            
+            // q2 is a poetry block
+            var descendingNested =
+                "\\q2 \\v 12 Verse twelve text lv2\n" +
+                "\\q1 verse twelve text lv1.\n";
 
             var nonNestedQMarkers= 
                 "\\q1 \\v 12 Verse twelve text.\n" +
                 "\\q2 \\v 13 Verse thirteen text.\n";
 
-            var expectedFromNested = "<div class=\"poetry-1\"><span class=\"verse\"><sup class=\"versemarker\">12</sup>Verse twelve text<div>verse twelve text</div><div class=\"poetry-1\">end verse twelve.</div></span></div>";
+            var expectedFromAcendingNested = "<div class=\"poetry-1\"><span class=\"verse\"><sup class=\"versemarker\">12</sup>Verse twelve text lv1<div class=\"poetry-1\">verse twelve text lv2</div><div class=\"poetry-2\">verse twelve text lv3.</div></span></div>";
+            var expectedFromDescendingNested = "<div class=\"poetry-2\"><span class=\"verse\"><sup class=\"versemarker\">12</sup>Verse twelve text lv2<div class=\"poetry-outdent-1\">verse twelve text lv1.</div></span></div>";
             var expectedFromNonNested = "<div class=\"poetry-1\"><span class=\"verse\"><sup class=\"versemarker\">12</sup>Verse twelve text.</span></div><div class=\"poetry-2\"><span class=\"verse\"><sup class=\"versemarker\">13</sup>Verse thirteen text.</span></div>";
             
-            Assert.AreEqual(expectedFromNested, WrapTest(nestedQMarkers));
+            Assert.AreEqual(expectedFromAcendingNested, WrapTest(ascendingNested));
+            Assert.AreEqual(expectedFromDescendingNested, WrapTest(descendingNested));
             Assert.AreEqual(expectedFromNonNested, WrapTest(nonNestedQMarkers));
         }
 

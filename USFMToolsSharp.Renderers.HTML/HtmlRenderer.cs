@@ -223,7 +223,7 @@ namespace USFMToolsSharp.Renderers.HTML
                         }
                         else if (depthOffset < 0)
                         {
-                            output.AppendLine($"<div class=\"poetry-{-depthOffset}__revert\">");
+                            output.AppendLine($"<div class=\"poetry-outdent-{-depthOffset}\">");
                         }
                         else
                         {

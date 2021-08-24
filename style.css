@@ -204,13 +204,13 @@ table#hrdftrtbl {
     margin-left: 4.5em;
 }
 
-.poetry-1__revert {
+.poetry-outdent-1 {
     margin-left: -1.5em;   
 }
 
-.poetry-2__revert {
+.poetry-outdent-2 {
     margin-left: -3em;
-} 
+}
 
 .selah-text {
     font-style: italic;
