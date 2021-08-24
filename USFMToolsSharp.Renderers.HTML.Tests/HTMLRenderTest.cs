@@ -236,6 +236,24 @@ namespace USFMToolsSharpTest
                 WrapTest("\\qa BETH")
             );
         }
+        [TestMethod]
+        public void TestNestedPoetryRender()
+        {
+            var nestedQMarkers = 
+                "\\q1 \\v 12 Verse twelve text\n" +
+                "\\q1 verse twelve text\n" +
+                "\\q2 end verse twelve.";
+
+            var nonNestedQMarkers= 
+                "\\q1 \\v 12 Verse twelve text.\n" +
+                "\\q2 \\v 13 Verse thirteen text.\n";
+
+            var expectedFromNested = "<div class=\"poetry-1\"><span class=\"verse\"><sup class=\"versemarker\">12</sup>Verse twelve text<div>verse twelve text</div><div class=\"poetry-1\">end verse twelve.</div></span></div>";
+            var expectedFromNonNested = "<div class=\"poetry-1\"><span class=\"verse\"><sup class=\"versemarker\">12</sup>Verse twelve text.</span></div><div class=\"poetry-2\"><span class=\"verse\"><sup class=\"versemarker\">13</sup>Verse thirteen text.</span></div>";
+            
+            Assert.AreEqual(expectedFromNested, WrapTest(nestedQMarkers));
+            Assert.AreEqual(expectedFromNonNested, WrapTest(nonNestedQMarkers));
+        }
 
         public string stripWhiteSpace(string input)
         {
