@@ -18,7 +18,8 @@ namespace USFMToolsSharp.Renderers.HTML
         private IList<string> TOCEntries;
         private CMarker CurrentChapter;
         private VMarker CurrentVerse;
-        private USFMDocument document;
+        private int NextFootnoteUniqueID = 1;
+	private USFMDocument document;
 
         public string FrontMatterHTML { get; set; }
         public string InsertedFooter { get; set;}
@@ -347,9 +348,11 @@ namespace USFMToolsSharp.Renderers.HTML
                             footnoteId = fMarker.FootNoteCaller;
                             break;
                     }
-                    string footnoteCallerHTML = $"<sup class=\"caller\">{footnoteId}</sup>";
+                    string footnoteCallerHTML = $"<sup id=\"footnote-caller-{NextFootnoteUniqueID}\" class=\"caller\"><a href=\"#footnote-target-{NextFootnoteUniqueID}\">{footnoteId}</a></sup>";
+                    string footnoteTargetHTML = $"<sup id=\"footnote-target-{NextFootnoteUniqueID}\" class=\"caller\"><a href=\"#footnote-caller-{NextFootnoteUniqueID}\">{footnoteId}</a></sup>";
+                    NextFootnoteUniqueID++;
                     output.AppendLine(footnoteCallerHTML);
-                    footnote.Append(footnoteCallerHTML);
+                    footnote.Append(footnoteTargetHTML);
                     foreach (Marker marker in input.Contents)
                     {
                         footnote.Append(RenderMarker(marker));
