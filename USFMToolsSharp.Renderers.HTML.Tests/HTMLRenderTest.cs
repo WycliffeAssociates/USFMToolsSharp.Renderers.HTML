@@ -89,11 +89,11 @@ namespace USFMToolsSharpTest
 
             // References - Quoted book title - Parallel passage reference
             Assert.AreEqual("<span class=\"verse\"><sup class=\"versemarker\">14</sup>Itulah sebabnya kata-kata ini ditulis dalam <span class=\"quoted-book\">Kitab Peperangan TUHAN,</span></span>", WrapTest("\\v 14 Itulah sebabnya kata-kata ini ditulis dalam \\bk Kitab Peperangan TUHAN,\\bk*"));
-            Assert.AreEqual("<span class=\"verse\"><sup class=\"versemarker\">5</sup>For God never said to any of his angels,<div class=\"poetry-1\">\"You are my Son;</div><div class=\"poetry-2\">today I have become your Father.\"</div><div class=\"reference\">Psa 2.7</div> </span>", WrapTest("\\v 5 For God never said to any of his angels,\\q1 \"You are my Son;\\q2 today I have become your Father.\"\\rq Psa 2.7\\rq* "));
+            Assert.AreEqual("<span class=\"verse\"><sup class=\"versemarker\">5</sup>For God never said to any of his angels,<div class=\"poetry-1\">\"You are my Son;</div><div class=\"poetry-2\">today I have become your Father.\"</div><div class=\"reference\">Psa 2.7</div></span>", WrapTest("\\v 5 For God never said to any of his angels,\\q1 \"You are my Son;\\q2 today I have become your Father.\"\\rq Psa 2.7\\rq* "));
 
             // Closing - Selah
             Assert.AreEqual("<div class=\"closing\">[[ayt.co/Mat]]</div>", WrapTest("\\cls [[ayt.co/Mat]]"));
-            Assert.AreEqual("<span class=\"verse\"><sup class=\"versemarker\">3</sup>Allah datang dari negeri Teman <div class=\"poetry-2\">dan Yang Mahakudus datang dari Gunung Paran. <div class=\"selah-text\">Sela</div> </div></span>", WrapTest("\\v 3 Allah datang dari negeri Teman \\q2 dan Yang Mahakudus datang dari Gunung Paran. \\qs Sela \\qs* "));
+            Assert.AreEqual("<span class=\"verse\"><sup class=\"versemarker\">3</sup>Allah datang dari negeri Teman <div class=\"poetry-2\">dan Yang Mahakudus datang dari Gunung Paran. <div class=\"selah-text\">Sela</div></div></span>", WrapTest("\\v 3 Allah datang dari negeri Teman \\q2 dan Yang Mahakudus datang dari Gunung Paran. \\qs Sela \\qs* "));
             Assert.AreEqual("<div class=\"poetry-2\">dan sampai batu yang penghabisan. <div class=\"selah-text\">Sela</div></div>", WrapTest("\\q2 dan sampai batu yang penghabisan. \\qs Sela \\qs*"));
 
             // Transliterated
@@ -183,14 +183,14 @@ namespace USFMToolsSharpTest
         [TestMethod]
         public void TestCharacterStylingRender()
         {
-            Assert.AreEqual("<span class=\"verse\"><sup class=\"versemarker\">21</sup>Penduduk kota yang satu akan pergi <span class=\"emphasis\">Emphasis</span> </span>", WrapTest("\\v 21 Penduduk kota yang satu akan pergi \\em Emphasis \\em* "));
-            Assert.AreEqual("<span class=\"verse\"><sup class=\"versemarker\">21</sup>Penduduk kota yang satu akan pergi <b>Boldness</b> </span>", WrapTest("\\v 21 Penduduk kota yang satu akan pergi \\bd Boldness \\bd* "));
-            Assert.AreEqual("<span class=\"verse\"><sup class=\"versemarker\">21</sup>Penduduk kota yang satu akan pergi <span class=\"bold-italic\">Boldness and Italics</span> </span>", WrapTest("\\v 21 Penduduk kota yang satu akan pergi \\bdit Boldness and Italics \\bdit* "));
-            Assert.AreEqual("<span class=\"verse\"><sup class=\"versemarker\">21</sup>Penduduk kota yang satu akan pergi <i>Italics</i> </span>", WrapTest("\\v 21 Penduduk kota yang satu akan pergi \\it Italics \\it* "));
-            Assert.AreEqual("<span class=\"verse\"><sup class=\"versemarker\">21</sup>Penduduk kota yang satu akan pergi <span class=\"superscript-text\">Superscript</span> </span>", WrapTest("\\v 21 Penduduk kota yang satu akan pergi \\sup Superscript \\sup* "));
-            Assert.AreEqual("<span class=\"verse\"><sup class=\"versemarker\">21</sup>Penduduk kota yang satu akan pergi <span class=\"deity-name\">Name of Diety</span> </span>", WrapTest("\\v 21 Penduduk kota yang satu akan pergi \\nd Name of Diety \\nd* "));
-            Assert.AreEqual("<span class=\"verse\"><sup class=\"versemarker\">21</sup>Penduduk kota yang satu akan pergi <span class=\"small-caps\">Small Caps</span> </span>", WrapTest("\\v 21 Penduduk kota yang satu akan pergi \\sc Small Caps \\sc* "));
-            Assert.AreEqual("<span class=\"verse\"><sup class=\"versemarker\">21</sup>Penduduk kota yang satu akan pergi <span class=\"normal-text\">Normal</span> </span>", WrapTest("\\v 21 Penduduk kota yang satu akan pergi \\no Normal \\no* "));
+            Assert.AreEqual("<span class=\"verse\"><sup class=\"versemarker\">21</sup>Penduduk kota yang satu akan pergi <span class=\"emphasis\">Emphasis</span></span>", WrapTest("\\v 21 Penduduk kota yang satu akan pergi \\em Emphasis \\em* "));
+            Assert.AreEqual("<span class=\"verse\"><sup class=\"versemarker\">21</sup>Penduduk kota yang satu akan pergi <b>Boldness</b></span>", WrapTest("\\v 21 Penduduk kota yang satu akan pergi \\bd Boldness \\bd* "));
+            Assert.AreEqual("<span class=\"verse\"><sup class=\"versemarker\">21</sup>Penduduk kota yang satu akan pergi <span class=\"bold-italic\">Boldness and Italics</span></span>", WrapTest("\\v 21 Penduduk kota yang satu akan pergi \\bdit Boldness and Italics \\bdit* "));
+            Assert.AreEqual("<span class=\"verse\"><sup class=\"versemarker\">21</sup>Penduduk kota yang satu akan pergi <i>Italics</i></span>", WrapTest("\\v 21 Penduduk kota yang satu akan pergi \\it Italics \\it* "));
+            Assert.AreEqual("<span class=\"verse\"><sup class=\"versemarker\">21</sup>Penduduk kota yang satu akan pergi <span class=\"superscript-text\">Superscript</span></span>", WrapTest("\\v 21 Penduduk kota yang satu akan pergi \\sup Superscript \\sup* "));
+            Assert.AreEqual("<span class=\"verse\"><sup class=\"versemarker\">21</sup>Penduduk kota yang satu akan pergi <span class=\"deity-name\">Name of Diety</span></span>", WrapTest("\\v 21 Penduduk kota yang satu akan pergi \\nd Name of Diety \\nd* "));
+            Assert.AreEqual("<span class=\"verse\"><sup class=\"versemarker\">21</sup>Penduduk kota yang satu akan pergi <span class=\"small-caps\">Small Caps</span></span>", WrapTest("\\v 21 Penduduk kota yang satu akan pergi \\sc Small Caps \\sc* "));
+            Assert.AreEqual("<span class=\"verse\"><sup class=\"versemarker\">21</sup>Penduduk kota yang satu akan pergi <span class=\"normal-text\">Normal</span></span>", WrapTest("\\v 21 Penduduk kota yang satu akan pergi \\no Normal \\no* "));
 
 
         }
