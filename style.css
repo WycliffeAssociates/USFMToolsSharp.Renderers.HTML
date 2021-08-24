@@ -172,6 +172,7 @@ table#hrdftrtbl {
 .chapter {
     margin-top: 1em;
     font-size: inherit;
+    position: relative;
 }
 
 .chaptermarker {
@@ -227,6 +228,11 @@ table#hrdftrtbl {
     font-size: 0.5em;
     vertical-align: top;
     mso-text-raise: 60%;
+}
+
+[class^="poetry-"] .versemarker {
+    position: absolute;
+    left: 0;
 }
 
 .closing {
