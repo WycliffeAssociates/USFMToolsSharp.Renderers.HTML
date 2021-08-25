@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using USFMToolsSharp.Models.Markers;
 
@@ -18,6 +19,8 @@ namespace USFMToolsSharp.Renderers.HTML
         private CMarker CurrentChapter;
         private VMarker CurrentVerse;
         private int NextFootnoteUniqueID = 1;
+        private USFMDocument document;
+
 
         public string FrontMatterHTML { get; set; }
         public string InsertedFooter { get; set;}
@@ -37,6 +40,7 @@ namespace USFMToolsSharp.Renderers.HTML
         }
         public string Render(USFMDocument input)
         {
+            document = input;
             UnrenderableTags = new List<string>();
             var encoding = GetEncoding(input);
             StringBuilder output = new StringBuilder();
@@ -203,7 +207,32 @@ namespace USFMToolsSharp.Renderers.HTML
                     output.AppendLine($"<sup class=\"versemarker-alt\">({vAMarker.AltVerseNumber})</sup>");
                     break;
                 case QMarker qMarker:
-                    output.AppendLine($"<div class=\"poetry-{qMarker.Depth}\">");
+                    QMarker parentQ = document
+                        .GetHierarchyToMarker(qMarker)
+                        .LastOrDefault(marker => marker is QMarker && marker != input) 
+                        as QMarker;
+
+                    if (parentQ == null)
+                    {
+                        output.AppendLine($"<div class=\"poetry-{qMarker.Depth}\">");
+                    }
+                    else // nested q, add css class based on diff calculation
+                    {
+                        int depthOffset = qMarker.Depth - parentQ.Depth;
+                        if (depthOffset > 0)
+                        {
+                            output.AppendLine($"<div class=\"poetry-{depthOffset}\">");
+                        }
+                        else if (depthOffset < 0)
+                        {
+                            output.AppendLine($"<div class=\"poetry-outdent-{-depthOffset}\">");
+                        }
+                        else
+                        {
+                            output.AppendLine($"<div>");
+                        }
+                    }
+
                     foreach(Marker marker in input.Contents)
                     {
                         output.Append(RenderMarker(marker));
