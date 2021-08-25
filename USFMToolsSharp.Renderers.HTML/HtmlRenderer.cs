@@ -785,6 +785,7 @@ namespace USFMToolsSharp.Renderers.HTML
                     footnoteHTML.Append(footnote);
                     footnoteHTML.AppendLine("</div>");
                 }
+                footnoteHTML.AppendLine("<hr/>");
                 FootnoteTextTags.Clear();
                 return footnoteHTML.ToString();
             }
