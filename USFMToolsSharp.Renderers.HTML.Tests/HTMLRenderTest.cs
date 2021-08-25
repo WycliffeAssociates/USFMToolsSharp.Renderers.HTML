@@ -176,7 +176,7 @@ namespace USFMToolsSharpTest
         {
 
             // Within Footnotes
-            Assert.AreEqual( "<div class=\"chapter\"><span class=\"chaptermarker\">1</span><span class=\"verse\"><sup class=\"versemarker\">1</sup><sup id=\"footnote-caller-1\" class=\"caller\"><a href=\"#footnote-target-1\">1</a></sup></span></div><hr/><div class=\"footnotes\"><sup id=\"footnote-target-1\" class=\"caller\"><a href=\"#footnote-caller-1\">1</a></sup><b> 3:5 </b> BERHALA: Lih. <span class=\"word-entry\"> Berhala </span> di Daftar Istilah.</div>" , WrapTest("\\c 1 \\v 1\\f + \\fr 3:5 \\fk berhala \\ft Lih. \\w Berhala \\w* di Daftar Istilah.\\f*"));
+            Assert.AreEqual("<div class=\"chapter\"><span class=\"chaptermarker\">1</span><span class=\"verse\"><sup class=\"versemarker\">1</sup><sup id=\"footnote-caller-1\" class=\"caller\"><a href=\"#footnote-target-1\">1</a></sup></span></div><hr/><div class=\"footnotes\"><sup id=\"footnote-target-1\" class=\"caller\"><a href=\"#footnote-caller-1\">1</a></sup><b> 3:5 </b> BERHALA: Lih. <span class=\"word-entry\"> Berhala </span> di Daftar Istilah.</div>" , WrapTest("\\c 1 \\v 1\\f + \\fr 3:5 \\fk berhala \\ft Lih. \\w Berhala \\w* di Daftar Istilah.\\f*"));
 
             // Word Entry Attributes
             Assert.AreEqual("<span class=\"verse\"><sup class=\"versemarker\">1</sup><span class=\"word-entry\"> Berhala </span> di Daftar Istilah</span>", WrapTest("\\v 1 \\w Berhala|Berhala \\w* di Daftar Istilah"));
