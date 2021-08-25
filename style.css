@@ -233,6 +233,8 @@ table#hrdftrtbl {
 [class^="poetry-"] .versemarker {
     position: absolute;
     left: 0;
+    top: unset;
+    margin-top: 0.5em;
 }
 
 .closing {
