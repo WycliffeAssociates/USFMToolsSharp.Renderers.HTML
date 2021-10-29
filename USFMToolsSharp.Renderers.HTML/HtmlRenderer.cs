@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using USFMToolsSharp.Models.Markers;
 
@@ -15,6 +16,10 @@ namespace USFMToolsSharp.Renderers.HTML
         public HTMLConfig ConfigurationHTML;
         public string currentChapterLabel;
         private IList<string> TOCEntries;
+        private CMarker CurrentChapter;
+        private VMarker CurrentVerse;
+        private int NextFootnoteUniqueID = 1;
+	private USFMDocument document;
 
         public string FrontMatterHTML { get; set; }
         public string InsertedFooter { get; set;}
@@ -34,9 +39,11 @@ namespace USFMToolsSharp.Renderers.HTML
         }
         public string Render(USFMDocument input)
         {
+            document = input;
             UnrenderableTags = new List<string>();
             var encoding = GetEncoding(input);
             StringBuilder output = new StringBuilder();
+            NextFootnoteUniqueID = 1;
 
             if (!ConfigurationHTML.partialHTML)
             {
@@ -133,7 +140,15 @@ namespace USFMToolsSharp.Renderers.HTML
                     output.AppendLine("</p>");
                     break;
                 case CMarker cMarker:
-                    output.AppendLine("<div class=\"chapter\">");
+                    CurrentChapter = cMarker;
+                    if (ConfigurationHTML.ChapterIdPattern == null)
+                    {
+                        output.AppendLine("<div class=\"chapter\">");
+                    }
+                    else
+                    {
+                        output.AppendLine($"<div id=\"{string.Format(ConfigurationHTML.ChapterIdPattern, cMarker.Number)}\" class=\"chapter\">");
+                    }
 
                     if (cMarker.GetChildMarkers<CLMarker>().Count > 0)
                     {
@@ -173,8 +188,9 @@ namespace USFMToolsSharp.Renderers.HTML
                     currentChapterLabel = cLMarker.Label;
                     break;
                 case VMarker vMarker:
+                    CurrentVerse = vMarker;
                     output.AppendLine($"<span class=\"verse\">");
-                    output.AppendLine($"<span class=\"versemarker\">{vMarker.VerseCharacter}</span>");
+                    output.AppendLine($"<sup class=\"versemarker\">{vMarker.VerseCharacter}</sup>");
                     foreach(Marker marker in input.Contents)
                     {
                         output.Append(RenderMarker(marker));
@@ -188,10 +204,35 @@ namespace USFMToolsSharp.Renderers.HTML
                     }
                     break;
                 case VAMarker vAMarker:
-                    output.AppendLine($"<span class=\"versemarker-alt\">({vAMarker.AltVerseNumber})</span>");
+                    output.AppendLine($"<sup class=\"versemarker-alt\">({vAMarker.AltVerseNumber})</sup>");
                     break;
                 case QMarker qMarker:
-                    output.AppendLine($"<div class=\"poetry-{qMarker.Depth}\">");
+                    QMarker parentQ = document
+                        .GetHierarchyToMarker(qMarker)
+                        .LastOrDefault(marker => marker is QMarker && marker != input) 
+                        as QMarker;
+
+                    if (parentQ == null)
+                    {
+                        output.AppendLine($"<div class=\"poetry-{qMarker.Depth}\">");
+                    }
+                    else // nested q, add css class based on diff calculation
+                    {
+                        int depthOffset = qMarker.Depth - parentQ.Depth;
+                        if (depthOffset > 0)
+                        {
+                            output.AppendLine($"<div class=\"poetry-{depthOffset}\">");
+                        }
+                        else if (depthOffset < 0)
+                        {
+                            output.AppendLine($"<div class=\"poetry-outdent-{-depthOffset}\">");
+                        }
+                        else
+                        {
+                            output.AppendLine($"<div>");
+                        }
+                    }
+
                     foreach(Marker marker in input.Contents)
                     {
                         output.Append(RenderMarker(marker));
@@ -308,9 +349,11 @@ namespace USFMToolsSharp.Renderers.HTML
                             footnoteId = fMarker.FootNoteCaller;
                             break;
                     }
-                    string footnoteCallerHTML = $"<span class=\"caller\">{footnoteId}</span>";
+                    string footnoteCallerHTML = $"<sup id=\"footnote-caller-{NextFootnoteUniqueID}\" class=\"caller\"><a href=\"#footnote-target-{NextFootnoteUniqueID}\">{footnoteId}</a></sup>";
+                    string footnoteTargetHTML = $"<sup id=\"footnote-target-{NextFootnoteUniqueID}\" class=\"caller\"><a href=\"#footnote-caller-{NextFootnoteUniqueID}\">{footnoteId}</a></sup>";
+                    NextFootnoteUniqueID++;
                     output.AppendLine(footnoteCallerHTML);
-                    footnote.Append(footnoteCallerHTML);
+                    footnote.Append(footnoteTargetHTML);
                     foreach (Marker marker in input.Contents)
                     {
                         footnote.Append(RenderMarker(marker));
@@ -410,7 +453,7 @@ namespace USFMToolsSharp.Renderers.HTML
                             crossId = xMarker.CrossRefCaller;
                             break;
                     }
-                    string crossCallerHTML = $"<span class=\"caller\">{crossId}</span>";
+                    string crossCallerHTML = $"<sup class=\"caller\">{crossId}</sup>";
                     output.AppendLine(crossCallerHTML);
                     crossRef.AppendLine(crossCallerHTML);
                     foreach (Marker marker in input.Contents)
@@ -445,7 +488,7 @@ namespace USFMToolsSharp.Renderers.HTML
                     output.Append("</span>");
                     break;
                 case FVMarker fVMarker:
-                    output.AppendLine($"<span class=\"versemarker\">{fVMarker.VerseCharacter}</span>");
+                    output.AppendLine($"<sup class=\"versemarker\">{fVMarker.VerseCharacter}</sup>");
                     break;
                 case TableBlock table:
                     output.AppendLine("<div>");
@@ -563,6 +606,9 @@ namespace USFMToolsSharp.Renderers.HTML
                     break;
                 case QACMarker qACMarker:
                     output.AppendLine($"<span class=\"acrostic-letter\">{qACMarker.AcrosticLetter}</span>");
+                    break;
+                case QAMarker qAMarker:
+                    output.AppendLine($"<span class=\"acrostic-heading\">{qAMarker.Heading}</span>");
                     break;
                 case QMMarker qMMarker:
                     output.Append($"<div class=\"embedded-poetry-{qMMarker.Depth}\">");
@@ -739,6 +785,7 @@ namespace USFMToolsSharp.Renderers.HTML
                     footnoteHTML.Append(footnote);
                     footnoteHTML.AppendLine("</div>");
                 }
+                footnoteHTML.AppendLine("<hr/>");
                 FootnoteTextTags.Clear();
                 return footnoteHTML.ToString();
             }
