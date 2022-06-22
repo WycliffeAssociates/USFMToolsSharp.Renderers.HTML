@@ -44,6 +44,7 @@ namespace USFMToolsSharp.Renderers.HTML
             var encoding = GetEncoding(input);
             StringBuilder output = new StringBuilder();
             NextFootnoteUniqueID = 1;
+            CurrentChapter = null;
 
             if (!ConfigurationHTML.partialHTML)
             {
@@ -189,7 +190,14 @@ namespace USFMToolsSharp.Renderers.HTML
                     break;
                 case VMarker vMarker:
                     CurrentVerse = vMarker;
-                    output.AppendLine($"<span class=\"verse\">");
+                    if (CurrentChapter != null)
+                    {
+                        output.AppendLine($"<span id=\"chp-{CurrentChapter.Number}-vs-{vMarker.StartingVerse}\" class=\"verse\">");
+                    }
+                    else
+                    {
+                        output.AppendLine($"<span id=\"vs-{vMarker.StartingVerse}\" class=\"verse\">");
+                    }
                     output.AppendLine($"<sup class=\"versemarker\">{vMarker.VerseCharacter}</sup>");
                     foreach(Marker marker in input.Contents)
                     {
