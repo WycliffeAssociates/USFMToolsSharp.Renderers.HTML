@@ -1,25 +1,19 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using NUnit.Framework;
 using USFMToolsSharp;
 using USFMToolsSharp.Renderers.HTML;
 
 namespace USFMToolsSharpTest
 {
 
-    [TestClass]
     public class HTMLRenderTest
     {
         private USFMToolsSharp.USFMParser parser;
         private HtmlRenderer render;
         private HTMLConfig configHTML;
 
-        [TestInitialize]
+        [SetUp]
         public void SetUpTestCase()
         {
             configHTML = new HTMLConfig(new List<string>(), partialHTML: true);
@@ -28,7 +22,7 @@ namespace USFMToolsSharpTest
             render = new HtmlRenderer(configHTML);
 
         }
-        [TestMethod]
+        [Test]
         public void TestSectionRender()
         {
             // Section Headings
@@ -44,7 +38,7 @@ namespace USFMToolsSharpTest
             Assert.AreEqual("<div class=\"sectionhead-2\">jilid 1 </div><div class=\"major-section-reference\">(Mazmur)</div>", WrapTest("\\ms2 jilid 1 \\mr (Mazmur)"));
 
         }
-        [TestMethod]
+        [Test]
         public void TestMajorTitleRender()
         {
             Assert.AreEqual("<div class=\"majortitle-1\">Keluaran</div>", WrapTest("\\mt1 Keluaran"));
@@ -52,7 +46,7 @@ namespace USFMToolsSharpTest
             Assert.AreEqual("<div class=\"majortitle-1\">Keluaran</div>", WrapTest("\\mt Keluaran"));
             Assert.AreEqual("<div class=\"majortitle-2\">Keluaran</div>", WrapTest("\\mt2 Keluaran"));
         }
-        [TestMethod]
+        [Test]
         public void TestHeaderRender()
         {
             Assert.AreEqual("<div class=\"header\">Genesis</div>", WrapTest("\\h Genesis"));
@@ -61,7 +55,7 @@ namespace USFMToolsSharpTest
             Assert.AreEqual("<div class=\"header\"></div>", WrapTest("\\h      "));
 
         }
-        [TestMethod]
+        [Test]
         public void TestChapterRender()
         {
 
@@ -79,7 +73,7 @@ namespace USFMToolsSharpTest
 
         }
 
-        [TestMethod]
+        [Test]
         public void TestVerseRender()
         {
 
@@ -97,11 +91,11 @@ namespace USFMToolsSharpTest
             Assert.AreEqual("<div class=\"poetry-2\">dan sampai batu yang penghabisan. <div class=\"selah-text\">Sela</div></div>", WrapTest("\\q2 dan sampai batu yang penghabisan. \\qs Sela \\qs*"));
 
             // Transliterated
-            Assert.AreEqual("<div class=\"chapter\"><span class=\"chaptermarker\">1</span><span class=\"verse\"><sup class=\"versemarker\">1</sup><sup id=\"footnote-caller-1\" class=\"caller\"><a href=\"#footnote-target-1\">1</a></sup></span></div><hr/><div class=\"footnotes\"><sup id=\"footnote-target-1\" class=\"caller\"><a href=\"#footnote-caller-1\">1</a></sup><b> 10:15 </b> DUNIA ORANG MATI: Dalam bahasa Yunani adalah <span class=\"transliterated\">Hades</span>, tempat orang setelah meninggal.</div><hr/>", WrapTest("\\c 1 \\v 1 \\f + \\fr 10:15 \\fk dunia orang mati \\ft Dalam bahasa Yunani adalah \\tl Hades\\tl* \\ft , tempat orang setelah meninggal.\\f*"));
+            Assert.AreEqual("<div class=\"chapter\"><span class=\"chaptermarker\">1</span><span class=\"verse\"><sup class=\"versemarker\">1</sup><sup id=\"footnote-caller-1\" class=\"caller\"><a href=\"#footnote-target-1\">1</a></sup></span></div><hr/><div class=\"footnotes\"><sup id=\"footnote-target-1\" class=\"caller\"><a href=\"#footnote-caller-1\">1</a></sup><b> 10:15 </b> DUNIA ORANG MATI: Dalam bahasa Yunani adalah <span class=\"transliterated\">Hades</span> , tempat orang setelah meninggal.</div><hr/>", WrapTest("\\c 1 \\v 1 \\f + \\fr 10:15 \\fk dunia orang mati \\ft Dalam bahasa Yunani adalah \\tl Hades\\tl* \\ft , tempat orang setelah meninggal.\\f*"));
             Assert.AreEqual("<span class=\"verse\"><sup class=\"versemarker\">27</sup><span class=\"transliterated\">TEKEL</span> :</span>", WrapTest("\\v 27 \\tl TEKEL\\tl* :"));
         }
 
-        [TestMethod]
+        [Test]
         public void TestTableRender()
         {
             // Table Rows - Cells
@@ -115,7 +109,7 @@ namespace USFMToolsSharpTest
 
 
         }
-        [TestMethod]
+        [Test]
         public void TestListRender()
         {
             // List Items
@@ -123,7 +117,7 @@ namespace USFMToolsSharpTest
             // Verse within List
             Assert.AreEqual("<div class=\"list-1\">Peres ayah Hezron.</div><div class=\"list-1\"><span class=\"verse\"><sup class=\"versemarker\">19</sup>Hezron ayah Ram.</span></div>", WrapTest("\\li Peres ayah Hezron. \\li \\v 19 Hezron ayah Ram."));
         }
-        [TestMethod]
+        [Test]
         public void TestFootnoteRender()
         {
             // Footnote Caller - Text - Alternate Translation
@@ -151,7 +145,7 @@ namespace USFMToolsSharpTest
             Assert.AreEqual("<div class=\"chapter\"><span class=\"chaptermarker\">1</span><span class=\"verse\"><sup class=\"versemarker\">1</sup><sup id=\"footnote-caller-1\" class=\"caller\"><a href=\"#footnote-target-1\">1</a></sup></span></div><hr/><div class=\"footnotes\"><sup id=\"footnote-target-1\" class=\"caller\"><a href=\"#footnote-caller-1\">1</a></sup><b> 9:55 </b>Beberapa  <sup class=\"versemarker\">56</sup>untuk menyelamatkan mereka.</div><hr/>", WrapTest("\\c 1 \\v 1 \\f + \\fr 9:55 \\ft Beberapa  \\fv 56 \\ft untuk menyelamatkan mereka.\\f*"));
 
         }
-        [TestMethod]
+        [Test]
         public void TestCrossReferenceRender()
         {
             // Cross Reference Caller
@@ -166,13 +160,13 @@ namespace USFMToolsSharpTest
             // Cross Reference Quotation
             Assert.AreEqual("<div class=\"chapter\"><span class=\"chaptermarker\">1</span><span class=\"verse\"><sup class=\"versemarker\">1</sup><sup class=\"caller\"></sup></span></div><hr/><span class=\"cross-ref\"><sup class=\"caller\"></sup><b> 11.21 </b><span class=\"cross-ref-quote\">Tebes</span> </span>", WrapTest("\\c 1 \\v 1 \\x - \\xo 11.21 \\xq Tebes \\xt \\x*"));
         }
-        [TestMethod]
+        [Test]
         public void TestVPRender()
         {
             Assert.AreEqual("<span class=\"verse\"><sup class=\"versemarker\">1a</sup> This is not Scripture</span>", WrapTest("\\v 1 \\vp 1a \\vp* This is not Scripture"));
             Assert.AreEqual("<span class=\"verse\"><sup class=\"versemarker\">2b</sup> This is not Scripture</span>", WrapTest("\\v 2 \\vp 2b \\vp* This is not Scripture"));
         }
-        [TestMethod]
+        [Test]
         public void TestWordEntryRender()
         {
 
@@ -187,7 +181,7 @@ namespace USFMToolsSharpTest
             Assert.AreEqual("<span class=\"verse\"><sup class=\"versemarker\">1</sup><span class=\"word-entry\"> gracious </span> di Daftar Istilah.</span>", WrapTest("\\v 1 \\w gracious|lemma=\"grace\" srcloc=\"gnt5:51.1.2.1\" \\w* di Daftar Istilah."));
 
         }
-        [TestMethod]
+        [Test]
         public void TestCharacterStylingRender()
         {
             Assert.AreEqual("<span class=\"verse\"><sup class=\"versemarker\">21</sup>Penduduk kota yang satu akan pergi <span class=\"emphasis\">Emphasis</span></span>", WrapTest("\\v 21 Penduduk kota yang satu akan pergi \\em Emphasis \\em* "));
@@ -201,7 +195,7 @@ namespace USFMToolsSharpTest
 
 
         }
-        [TestMethod]
+        [Test]
         public void TestStyleRender()
         {
             render.ConfigurationHTML.divClasses.Add("two-columns");
@@ -210,7 +204,7 @@ namespace USFMToolsSharpTest
             Assert.AreEqual("<div class=\"two-columns\"><div class=\"justified\"><span class=\"verse\"><sup class=\"versemarker\">200</sup>Genesis</span></div></div>", WrapTest("\\v 200 Genesis"));
 
         }
-        [TestMethod]
+        [Test]
         public void TestChapterBreak()
         {
             render.ConfigurationHTML.separateChapters = true;
@@ -219,14 +213,14 @@ namespace USFMToolsSharpTest
             Assert.AreEqual("<div class=\"chapter\"><span class=\"chaptermarker\">1</span><span class=\"verse\"><sup class=\"versemarker\">1</sup>First </span></div><br class=\"pagebreak\"></br><div class=\"pagebreak\"></div><div class=\"chapter\"><span class=\"chaptermarker\">2</span><span class=\"verse\"><sup class=\"versemarker\">1</sup>Second </span></div><br class=\"pagebreak\"></br><div class=\"pagebreak\"></div><div class=\"chapter\"><span class=\"chaptermarker\">3</span><span class=\"verse\"><sup class=\"versemarker\">1</sup>Third</span></div><br class=\"pagebreak\"></br><div class=\"pagebreak\"></div>", WrapTest("\\c 1 \\v 1 First \\c 2 \\v 1 Second \\c 3 \\v 1 Third"));
 
         }
-        [TestMethod]
+        [Test]
         public void TestBlankColumn()
         {
             render.ConfigurationHTML.blankColumn = true;
 
             Assert.AreEqual("<table class=\"blank_col\"><tr><td><div class=\"chapter\"><span class=\"chaptermarker\">1</span><span class=\"verse\"><sup class=\"versemarker\">1</sup>First </span><span class=\"verse\"><sup class=\"versemarker\">2</sup>Second </span><span class=\"verse\"><sup class=\"versemarker\">3</sup>Third</span></div></td><td></td></tr></table>", WrapTest("\\c 1 \\v 1 First \\v 2 Second \\v 3 Third"));
         }
-        [TestMethod]
+        [Test]
         public void TestUnknownMarkerRender()
         {
 
@@ -235,7 +229,7 @@ namespace USFMToolsSharpTest
             Assert.AreEqual("", WrapTest("\\123 sdfgsgdfg"));
 
         }
-        [TestMethod]
+        [Test]
         public void TestAcrosticHeadingRender()
         {
             Assert.AreEqual(
@@ -243,7 +237,7 @@ namespace USFMToolsSharpTest
                 WrapTest("\\qa BETH")
             );
         }
-        [TestMethod]
+        [Test]
         public void TestNestedPoetryRender()
         {
             // q1 is a poetry block
@@ -268,6 +262,14 @@ namespace USFMToolsSharpTest
             Assert.AreEqual(expectedFromAcendingNested, WrapTest(ascendingNested));
             Assert.AreEqual(expectedFromDescendingNested, WrapTest(descendingNested));
             Assert.AreEqual(expectedFromNonNested, WrapTest(nonNestedQMarkers));
+        }
+
+        [Test]
+        public void TestPIMarkers()
+        {
+            var usfm = "\\pi This is a indented paragraph";
+            var expected = $"<p class=\"para-indent-1\">This is a indented paragraph</p>";
+            Assert.AreEqual(expected, WrapTest(usfm));
         }
 
         public string stripWhiteSpace(string input)
