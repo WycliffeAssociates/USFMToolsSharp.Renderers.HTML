@@ -139,6 +139,14 @@ namespace USFMToolsSharp.Renderers.HTML
                     }
                     output.AppendLine("</p>");
                     break;
+                case PIMarker piMarker:
+                    output.AppendLine($"<p class=\"para-indent-{piMarker.Depth}\">");
+                    foreach (var marker in input.Contents)
+                    {
+                        output.Append(RenderMarker(marker));
+                    }
+                    output.AppendLine("</p>");
+                    break;
                 case CMarker cMarker:
                     CurrentChapter = cMarker;
                     if (ConfigurationHTML.ChapterIdPattern == null)
