@@ -135,7 +135,7 @@ namespace USFMToolsSharp.Renderers.HTML
                     output.AppendLine("<p>");
                     foreach(Marker marker in input.Contents)
                     {
-                       RenderMarker(marker, output, markerStack);
+                       RenderMarker(marker, output);
                     }
                     output.AppendLine("</p>");
                     break;
