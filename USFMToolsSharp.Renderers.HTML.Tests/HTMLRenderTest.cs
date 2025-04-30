@@ -9,7 +9,7 @@ namespace USFMToolsSharpTest
 
     public class HTMLRenderTest
     {
-        private USFMToolsSharp.USFMParser parser;
+        private USFMParser parser;
         private HtmlRenderer render;
         private HTMLConfig configHTML;
 
@@ -102,7 +102,7 @@ namespace USFMToolsSharpTest
             Assert.AreEqual("<div><table class=\"table-block\"><tr><td class=\"table-cell\">dari suku Ruben</td><td class=\"table-cell-right\">12.000</td></tr></table></div>", WrapTest("\\tr \\tc1 dari suku Ruben \\tcr2 12.000"));
 
             // Embedded Verse
-            Assert.AreEqual("<td class=\"table-cell\"><span class=\"verse\"><sup class=\"versemarker\">6</sup>dari suku Asyer</span></td>", WrapTest("\\tc1 \\v 6 dari suku Asyer"));
+            Assert.AreEqual("<td class=\"table-cell\"></td><span class=\"verse\"><sup class=\"versemarker\">6</sup>dari suku Asyer</span>", WrapTest("\\tc1 \\v 6 dari suku Asyer"));
 
             // Table Headers
             Assert.AreEqual("<div><table class=\"table-block\"><tr><td class=\"table-head\">dari suku Ruben</td><td class=\"table-head-right\">12.000</td></tr></table></div>", WrapTest("\\tr \\th1 dari suku Ruben \\thr2 12.000"));

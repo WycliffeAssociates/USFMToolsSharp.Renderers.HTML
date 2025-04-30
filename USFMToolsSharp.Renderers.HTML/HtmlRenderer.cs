@@ -364,7 +364,7 @@ namespace USFMToolsSharp.Renderers.HTML
                     footnote.Append(footnoteTargetHTML);
                     foreach (Marker marker in input.Contents)
                     {
-                        RenderMarker(marker, output, markerStack);
+                        RenderMarker(marker, footnote, markerStack);
                     }
                     FootnoteTextTags.Add(footnote.ToString());
                     break;
