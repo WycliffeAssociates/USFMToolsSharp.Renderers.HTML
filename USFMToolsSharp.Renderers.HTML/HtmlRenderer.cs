@@ -42,7 +42,7 @@ namespace USFMToolsSharp.Renderers.HTML
             document = input;
             UnrenderableTags = new List<string>();
             var encoding = GetEncoding(input);
-            StringBuilder output = new StringBuilder(input.Contents.Count * 20);
+            var output = new StringBuilder(input.NumberOfTotalMarkersAtParse * 2 + 10);
             NextFootnoteUniqueID = 1;
 
             if (!ConfigurationHTML.partialHTML)
