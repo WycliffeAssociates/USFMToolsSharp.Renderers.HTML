@@ -219,7 +219,12 @@ The renderer supports a wide range of USFM markers including:
 - **Cross References**: `\x`, `\xo`, `\xt`, `\xq`
 - **Character Formatting**: `\bd`, `\it`, `\bdit`, `\em`, `\sc`, `\no`, `\nd`, `\sup`
 - **Special Text**: `\add`, `\bk`, `\tl`, `\w`
-- **Introductions**: `\imt`, `\is`, `\ip`, `\ipi`, `\im`, `\imi`, `\iq`, `\ili`, `\iot`, `\io`, `\ior`, `\ipq`, `\imq`, `\ipr`
+- **Introductions**:
+  - Titles and Headings: `\imt`, `\is`
+  - Paragraphs: `\ip`, `\ipi`, `\im`, `\imi`, `\ipq`, `\imq`, `\ipr`
+  - Poetry: `\iq`
+  - Lists: `\ili`
+  - Outlines: `\iot`, `\io`, `\ior`
 - **Descriptive**: `\d`, `\r`, `\rq`, `\cls`
 - **Breaks**: `\b`
 
