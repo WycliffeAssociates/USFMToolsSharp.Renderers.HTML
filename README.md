@@ -203,29 +203,3 @@ The renderer uses CSS classes for styling. A default `style.css` file is referen
 - `.table-block` - Tables
 
 For a complete list of CSS classes, refer to the included `style.css` file.
-
-## Supported USFM Markers
-
-The renderer supports a wide range of USFM markers including:
-
-- **Identification**: `\id`, `\ide`, `\h`, `\toc`
-- **Titles and Headings**: `\mt`, `\ms`, `\s`
-- **Chapters and Verses**: `\c`, `\ca`, `\cl`, `\v`, `\va`
-- **Paragraphs**: `\p`, `\pi`, `\m`, `\pc`
-- **Poetry**: `\q`, `\qr`, `\qc`, `\qm`, `\qa`, `\qac`, `\qs`
-- **Lists**: `\li`
-- **Tables**: `\tr`, `\th`, `\thr`, `\tc`, `\tcr`
-- **Footnotes**: `\f`, `\fr`, `\fk`, `\ft`, `\fq`, `\fqa`, `\fv`
-- **Cross References**: `\x`, `\xo`, `\xt`, `\xq`
-- **Character Formatting**: `\bd`, `\it`, `\bdit`, `\em`, `\sc`, `\no`, `\nd`, `\sup`
-- **Special Text**: `\add`, `\bk`, `\tl`, `\w`
-- **Introductions**:
-  - Titles and Headings: `\imt`, `\is`
-  - Paragraphs: `\ip`, `\ipi`, `\im`, `\imi`, `\ipq`, `\imq`, `\ipr`
-  - Poetry: `\iq`
-  - Lists: `\ili`
-  - Outlines: `\iot`, `\io`, `\ior`
-- **Descriptive**: `\d`, `\r`, `\rq`, `\cls`
-- **Breaks**: `\b`
-
-Any markers not yet implemented will be added to the `UnrenderableTags` list, which you can check after rendering.
