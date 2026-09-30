@@ -16,8 +16,11 @@ You can install this package from nuget https://www.nuget.org/packages/USFMTools
 
 # Requirements
 
-We targeted .net standard 2.0 so .net core 2.0, .net framework 4.6.1, and mono 5.4 and
-higher are the bare minimum.
+This package targets .NET 10 and requires USFMToolsSharp 2.0 or later.
+
+USFMToolsSharp 2.x parses a document into several hierarchies. The renderer walks the
+default hierarchy (`USFMDocument.Hierarchies[0]`), which nests markers the same way the
+1.x tree did, so the rendered HTML is unchanged from earlier versions.
 
 # Building
 

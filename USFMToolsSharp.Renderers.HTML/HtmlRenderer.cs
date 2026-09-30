@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using USFMToolsSharp.Models;
 using USFMToolsSharp.Models.Markers;
 
 
@@ -10,6 +11,8 @@ namespace USFMToolsSharp.Renderers.HTML
 {
     public class HtmlRenderer
     {
+        private const int DefaultHierarchyIndex = 0;
+
         public List<string> UnrenderableTags;
         public List<string> FootnoteTextTags;
         public List<string> CrossReferenceTags;
@@ -84,7 +87,7 @@ namespace USFMToolsSharp.Renderers.HTML
                 bodyContent.AppendLine("<table class=\"blank_col\"><tr><td>");
             }
 
-            foreach (Marker marker in input.Contents)
+            foreach (var marker in input.Hierarchies[DefaultHierarchyIndex].Contents)
             {
                 RenderMarker(marker, bodyContent, new Stack<Marker>());
             }
@@ -101,9 +104,9 @@ namespace USFMToolsSharp.Renderers.HTML
                 bodyContent.AppendLine("</td><td></td></tr></table>");
             }
 
-            foreach (string class_name in ConfigurationHTML.divClasses)
+            for (var index = 0; index < ConfigurationHTML.divClasses.Count; index++)
             {
-                bodyContent.AppendLine($"</div>");
+                bodyContent.AppendLine("</div>");
             }
 
             if (!ConfigurationHTML.partialHTML)
@@ -119,22 +122,22 @@ namespace USFMToolsSharp.Renderers.HTML
         }
         private string GetEncoding(USFMDocument input)
         {
-            var encodingSearch = input.GetChildMarkers<IDEMarker>();
+            var encodingSearch = input.Hierarchies[DefaultHierarchyIndex].GetChildMarkers<IDEMarker>();
             if (encodingSearch.Count > 0)
             {
-                return encodingSearch[0].Encoding;
+                return encodingSearch[0].As<IDEMarker>().Encoding;
             }
             return null;
         }
 
-        private void RenderMarker(Marker input, StringBuilder output, Stack<Marker> markerStack)
+        private void RenderMarker(HierarchyNode input, StringBuilder output, Stack<Marker> markerStack)
         {
             markerStack.Push(input);
-            switch (input)
+            switch (input.Marker)
             {
                 case PMarker _:
                     output.AppendLine("<p>");
-                    foreach(Marker marker in input.Contents)
+                    foreach(var marker in input.Contents)
                     {
                        RenderMarker(marker, output, markerStack);
                     }
@@ -159,7 +162,7 @@ namespace USFMToolsSharp.Renderers.HTML
                         output.AppendLine($"<div id=\"{string.Format(ConfigurationHTML.ChapterIdPattern, cMarker.Number)}\" class=\"chapter\">");
                     }
 
-                    if (cMarker.GetChildMarkers<CLMarker>().Count > 0)
+                    if (input.GetChildMarkers<CLMarker>().Count > 0)
                     {
                         output.AppendLine($"<div class=\"chapterlabel\">{cMarker.CustomChapterLabel}</div>");
                         output.AppendLine("<br/>");
@@ -174,7 +177,7 @@ namespace USFMToolsSharp.Renderers.HTML
                         output.AppendLine($"<span class=\"chaptermarker\">{cMarker.PublishedChapterMarker}</span>");
                     }
 
-                    foreach (Marker marker in input.Contents)
+                    foreach (var marker in input.Contents)
                     {
                         RenderMarker(marker, output, markerStack);
                     }
@@ -200,7 +203,7 @@ namespace USFMToolsSharp.Renderers.HTML
                     CurrentVerse = vMarker;
                     output.AppendLine($"<span class=\"verse\">");
                     output.AppendLine($"<sup class=\"versemarker\">{vMarker.VerseCharacter}</sup>");
-                    foreach(Marker marker in input.Contents)
+                    foreach(var marker in input.Contents)
                     {
                         RenderMarker(marker, output, markerStack);
                     }
@@ -217,7 +220,7 @@ namespace USFMToolsSharp.Renderers.HTML
                     break;
                 case QMarker qMarker:
                     var parentQ = markerStack
-                        .LastOrDefault(marker => marker is QMarker && marker != input) 
+                        .LastOrDefault(marker => marker is QMarker && marker != input.Marker) 
                         as QMarker;
 
                     if (parentQ == null)
@@ -241,7 +244,7 @@ namespace USFMToolsSharp.Renderers.HTML
                         }
                     }
 
-                    foreach(Marker marker in input.Contents)
+                    foreach(var marker in input.Contents)
                     {
                         RenderMarker(marker, output, markerStack);
                     }
@@ -249,7 +252,7 @@ namespace USFMToolsSharp.Renderers.HTML
                     break;
                 case MMarker mMarker:
                     output.AppendLine("<div class=\"resetmargin\">");
-                    foreach(Marker marker in input.Contents)
+                    foreach(var marker in input.Contents)
                     {
                         RenderMarker(marker, output, markerStack);
                     }
@@ -260,7 +263,7 @@ namespace USFMToolsSharp.Renderers.HTML
                     break;
                 case BDMarker bdMarker:
                     output.AppendLine("<b>");
-                    foreach(Marker marker in input.Contents)
+                    foreach(var marker in input.Contents)
                     {
                         RenderMarker(marker, output, markerStack);
                     }
@@ -268,7 +271,7 @@ namespace USFMToolsSharp.Renderers.HTML
                     break;
                 case ITMarker iTMarker:
                     output.AppendLine("<i>");
-                    foreach (Marker marker in input.Contents)
+                    foreach (var marker in input.Contents)
                     {
                         RenderMarker(marker, output, markerStack);
                     }
@@ -276,7 +279,7 @@ namespace USFMToolsSharp.Renderers.HTML
                     break;
                 case BDITMarker bditMarker:
                     output.AppendLine("<span class=\"bold-italic\">");
-                    foreach (Marker marker in input.Contents)
+                    foreach (var marker in input.Contents)
                     {
                         RenderMarker(marker, output, markerStack);
                     }
@@ -284,7 +287,7 @@ namespace USFMToolsSharp.Renderers.HTML
                     break;
                 case EMMarker emMarker:
                     output.AppendLine("<span class=\"emphasis\">");
-                    foreach (Marker marker in input.Contents)
+                    foreach (var marker in input.Contents)
                     {
                         RenderMarker(marker, output, markerStack);
                     }
@@ -292,7 +295,7 @@ namespace USFMToolsSharp.Renderers.HTML
                     break;
                 case NOMarker noMarker:
                     output.AppendLine("<span class=\"normal-text\">");
-                    foreach (Marker marker in input.Contents)
+                    foreach (var marker in input.Contents)
                     {
                         RenderMarker(marker, output, markerStack);
                     }
@@ -300,7 +303,7 @@ namespace USFMToolsSharp.Renderers.HTML
                     break;
                 case NDMarker ndMarker:
                     output.AppendLine("<span class=\"deity-name\">");
-                    foreach (Marker marker in input.Contents)
+                    foreach (var marker in input.Contents)
                     {
                         RenderMarker(marker, output, markerStack);
                     }
@@ -308,7 +311,7 @@ namespace USFMToolsSharp.Renderers.HTML
                     break;
                 case SUPMarker supMarker:
                     output.AppendLine("<span class=\"superscript-text\">");
-                    foreach (Marker marker in input.Contents)
+                    foreach (var marker in input.Contents)
                     {
                         RenderMarker(marker, output, markerStack);
                     }
@@ -323,7 +326,7 @@ namespace USFMToolsSharp.Renderers.HTML
                     output.AppendLine($"<div class=\"majortitle-{mTMarker.Weight}\">");
                     output.AppendLine(mTMarker.Title);
                     output.AppendLine("</div>");
-                    foreach (Marker marker in input.Contents)
+                    foreach (var marker in input.Contents)
                     {
                         RenderMarker(marker, output, markerStack);
                     }
@@ -332,7 +335,7 @@ namespace USFMToolsSharp.Renderers.HTML
                     output.AppendLine($"<div class=\"sectionhead-{mSMarker.Weight}\">");
                     output.AppendLine(mSMarker.Heading);
                     output.AppendLine("</div>");
-                    foreach (Marker marker in input.Contents)
+                    foreach (var marker in input.Contents)
                     {
                         RenderMarker(marker, output, markerStack);
                     }
@@ -362,20 +365,20 @@ namespace USFMToolsSharp.Renderers.HTML
                     NextFootnoteUniqueID++;
                     output.AppendLine(footnoteCallerHTML);
                     footnote.Append(footnoteTargetHTML);
-                    foreach (Marker marker in input.Contents)
+                    foreach (var marker in input.Contents)
                     {
                         RenderMarker(marker, footnote, markerStack);
                     }
                     FootnoteTextTags.Add(footnote.ToString());
                     break;
                 case FPMarker fPMarker:
-                    foreach (Marker marker in input.Contents)
+                    foreach (var marker in input.Contents)
                     {
                         RenderMarker(marker, output, markerStack);
                     }
                     break;
                 case FTMarker fTMarker:
-                    foreach(Marker marker in input.Contents)
+                    foreach(var marker in input.Contents)
                     {
                         RenderMarker(marker, output, markerStack);
                     }
@@ -388,7 +391,7 @@ namespace USFMToolsSharp.Renderers.HTML
                     break;
                 case FQAMarker _:
                     output.Append("<span class=\"footnote-alternate-translation\">");
-                    foreach (Marker marker in input.Contents)
+                    foreach (var marker in input.Contents)
                     {
                         RenderMarker(marker, output, markerStack);
                     }
@@ -401,7 +404,7 @@ namespace USFMToolsSharp.Renderers.HTML
                     output.AppendLine($"<div class=\"sectionhead-{sMarker.Weight}\">");
                     output.AppendLine(sMarker.Text);
                     output.AppendLine("</div>");
-                    foreach (Marker marker in input.Contents)
+                    foreach (var marker in input.Contents)
                     {
                         RenderMarker(marker, output, markerStack);
                     }
@@ -413,7 +416,7 @@ namespace USFMToolsSharp.Renderers.HTML
                     break;
                 case LIMarker liMarker:
                     output.AppendLine($"<div class=\"list-{liMarker.Depth}\">");
-                    foreach (Marker marker in input.Contents)
+                    foreach (var marker in input.Contents)
                     {
                         RenderMarker(marker, output, markerStack);
                     }
@@ -421,7 +424,7 @@ namespace USFMToolsSharp.Renderers.HTML
                     break;
                 case ADDMarker addMarker:
                     output.AppendLine($"<span class=\"additions\">");
-                    foreach (Marker marker in input.Contents)
+                    foreach (var marker in input.Contents)
                     {
                         RenderMarker(marker, output, markerStack);
                     }
@@ -429,7 +432,7 @@ namespace USFMToolsSharp.Renderers.HTML
                     break;
                 case TLMarker tlMarker:
                     output.AppendLine($"<span class=\"transliterated\">");
-                    foreach (Marker marker in input.Contents)
+                    foreach (var marker in input.Contents)
                     {
                         RenderMarker(marker, output, markerStack);
                     }
@@ -437,7 +440,7 @@ namespace USFMToolsSharp.Renderers.HTML
                     break;
                 case SCMarker scMarker:
                     output.AppendLine($"<span class=\"small-caps\">");
-                    foreach (Marker marker in input.Contents)
+                    foreach (var marker in input.Contents)
                     {
                         RenderMarker(marker, output, markerStack);
                     }
@@ -464,7 +467,7 @@ namespace USFMToolsSharp.Renderers.HTML
                     string crossCallerHTML = $"<sup class=\"caller\">{crossId}</sup>";
                     output.AppendLine(crossCallerHTML);
                     crossRef.AppendLine(crossCallerHTML);
-                    foreach (Marker marker in input.Contents)
+                    foreach (var marker in input.Contents)
                     {
                         RenderMarker(marker, crossRef, markerStack);
                     }
@@ -474,14 +477,14 @@ namespace USFMToolsSharp.Renderers.HTML
                     output.AppendLine($"<b> {xOMarker.OriginRef} </b>");
                     break;
                 case XTMarker xTMarker:
-                    foreach (Marker marker in input.Contents)
+                    foreach (var marker in input.Contents)
                     {
                         RenderMarker(marker, output, markerStack);
                     }
                     break;
                 case XQMarker xQMarker:
                     output.AppendLine("<span class=\"cross-ref-quote\">");
-                    foreach (Marker marker in input.Contents)
+                    foreach (var marker in input.Contents)
                     {
                         RenderMarker(marker, output, markerStack);
                     }
@@ -489,7 +492,7 @@ namespace USFMToolsSharp.Renderers.HTML
                     break;
                 case FQMarker fqMarker:
                     output.Append("<span class=\"footnote-alternate-translation\">");
-                    foreach (Marker marker in input.Contents)
+                    foreach (var marker in input.Contents)
                     {
                         RenderMarker(marker, output, markerStack);
                     }
@@ -501,7 +504,7 @@ namespace USFMToolsSharp.Renderers.HTML
                 case TableBlock table:
                     output.AppendLine("<div>");
                     output.AppendLine("<table class=\"table-block\">");
-                    foreach (Marker marker in input.Contents)
+                    foreach (var marker in input.Contents)
                     {
                         RenderMarker(marker, output, markerStack);
                     }
@@ -510,7 +513,7 @@ namespace USFMToolsSharp.Renderers.HTML
                     break;
                 case TRMarker tRMarker:
                     output.AppendLine("<tr>");
-                    foreach (Marker marker in input.Contents)
+                    foreach (var marker in input.Contents)
                     {
                         RenderMarker(marker, output, markerStack);
                     }
@@ -518,7 +521,7 @@ namespace USFMToolsSharp.Renderers.HTML
                     break;
                 case THMarker tHMarker:
                     output.AppendLine($"<td class=\"table-head\">");
-                    foreach (Marker marker in input.Contents)
+                    foreach (var marker in input.Contents)
                     {
                         RenderMarker(marker, output, markerStack);
                     }
@@ -526,7 +529,7 @@ namespace USFMToolsSharp.Renderers.HTML
                     break;
                 case THRMarker tHRMarker:
                     output.AppendLine($"<td class=\"table-head-right\">");
-                    foreach (Marker marker in input.Contents)
+                    foreach (var marker in input.Contents)
                     {
                         RenderMarker(marker, output, markerStack);
                     }
@@ -534,7 +537,7 @@ namespace USFMToolsSharp.Renderers.HTML
                     break;
                 case TCMarker tCMarker:
                     output.AppendLine("<td class=\"table-cell\">");
-                    foreach (Marker marker in input.Contents)
+                    foreach (var marker in input.Contents)
                     {
                         RenderMarker(marker, output, markerStack);
                     }
@@ -542,7 +545,7 @@ namespace USFMToolsSharp.Renderers.HTML
                     break;
                 case TCRMarker tCRMarker:
                     output.AppendLine("<td class=\"table-cell-right\">");
-                    foreach (Marker marker in input.Contents)
+                    foreach (var marker in input.Contents)
                     {
                         RenderMarker(marker, output, markerStack);
                     }
@@ -550,7 +553,7 @@ namespace USFMToolsSharp.Renderers.HTML
                     break;
                 case PCMarker pCMarker:
                     output.Append("<div class=\"center-paragraph\">");
-                    foreach (Marker marker in input.Contents)
+                    foreach (var marker in input.Contents)
                     {
                         RenderMarker(marker, output, markerStack);
                     }
@@ -558,7 +561,7 @@ namespace USFMToolsSharp.Renderers.HTML
                     break;
                 case CLSMarker cLSMarker:
                     output.Append("<div class=\"closing\">");
-                    foreach (Marker marker in input.Contents)
+                    foreach (var marker in input.Contents)
                     {
                         RenderMarker(marker, output, markerStack);
                     }
@@ -566,7 +569,7 @@ namespace USFMToolsSharp.Renderers.HTML
                     break;
                 case RMarker rMarker:
                     output.AppendLine($"<div class=\"section-reference\">");
-                    foreach (Marker marker in input.Contents)
+                    foreach (var marker in input.Contents)
                     {
                         RenderMarker(marker, output, markerStack);
                     }
@@ -574,7 +577,7 @@ namespace USFMToolsSharp.Renderers.HTML
                     break;
                 case RQMarker rQMarker:
                     output.AppendLine($"<div class=\"reference\">");
-                    foreach (Marker marker in input.Contents)
+                    foreach (var marker in input.Contents)
                     {
                         RenderMarker(marker, output, markerStack);
                     }
@@ -582,7 +585,7 @@ namespace USFMToolsSharp.Renderers.HTML
                     break;
                 case QSMarker qSMarker:
                     output.Append("<div class=\"selah-text\">");
-                    foreach (Marker marker in input.Contents)
+                    foreach (var marker in input.Contents)
                     {
                         RenderMarker(marker, output, markerStack);
                     }
@@ -590,7 +593,7 @@ namespace USFMToolsSharp.Renderers.HTML
                     break;
                 case QRMarker qRMarker:
                     output.Append("<div class=\"poetry-right\">");
-                    foreach (Marker marker in input.Contents)
+                    foreach (var marker in input.Contents)
                     {
                         RenderMarker(marker, output, markerStack);
                     }
@@ -598,7 +601,7 @@ namespace USFMToolsSharp.Renderers.HTML
                     break;
                 case QCMarker qCMarker:
                     output.Append("<div class=\"poetry-center\">");
-                    foreach (Marker marker in input.Contents)
+                    foreach (var marker in input.Contents)
                     {
                         RenderMarker(marker, output, markerStack);
                     }
@@ -606,7 +609,7 @@ namespace USFMToolsSharp.Renderers.HTML
                     break;
                 case QDMarker qDMarker:
                     output.Append("<div class=\"hebrew-note\">");
-                    foreach (Marker marker in input.Contents)
+                    foreach (var marker in input.Contents)
                     {
                         RenderMarker(marker, output, markerStack);
                     }
@@ -620,7 +623,7 @@ namespace USFMToolsSharp.Renderers.HTML
                     break;
                 case QMMarker qMMarker:
                     output.Append($"<div class=\"embedded-poetry-{qMMarker.Depth}\">");
-                    foreach (Marker marker in input.Contents)
+                    foreach (var marker in input.Contents)
                     {
                         RenderMarker(marker, output, markerStack);
                     }
@@ -630,7 +633,7 @@ namespace USFMToolsSharp.Renderers.HTML
                     output.Append("<div class=\"descriptive-text\">");
                     output.AppendLine(dMarker.Description);
                     output.AppendLine("</div>");
-                    foreach (Marker marker in input.Contents)
+                    foreach (var marker in input.Contents)
                     {
                         RenderMarker(marker, output, markerStack);
                     }
@@ -651,7 +654,7 @@ namespace USFMToolsSharp.Renderers.HTML
                     break;
                 case IQMarker iqMarker:
                     output.AppendLine($"<div class=\"poetry-{iqMarker.Depth}\">");
-                    foreach (Marker marker in input.Contents)
+                    foreach (var marker in input.Contents)
                     {
                         RenderMarker(marker, output, markerStack);
                     }
@@ -659,7 +662,7 @@ namespace USFMToolsSharp.Renderers.HTML
                     break;
                 case IPMarker iPMarker:
                     output.Append($"<div class=\"intro-para\">");
-                    foreach (Marker marker in input.Contents)
+                    foreach (var marker in input.Contents)
                     {
                         RenderMarker(marker, output, markerStack);
                     }
@@ -667,7 +670,7 @@ namespace USFMToolsSharp.Renderers.HTML
                     break;
                 case IPIMarker iPIMarker:
                     output.Append($"<div class=\"intro-para-indent\">");
-                    foreach (Marker marker in input.Contents)
+                    foreach (var marker in input.Contents)
                     {
                         RenderMarker(marker, output, markerStack);
                     }
@@ -675,7 +678,7 @@ namespace USFMToolsSharp.Renderers.HTML
                     break;
                 case IMMarker iMMarker:
                     output.Append($"<div class=\"intro-para-flush\">");
-                    foreach (Marker marker in input.Contents)
+                    foreach (var marker in input.Contents)
                     {
                         RenderMarker(marker, output, markerStack);
                     }
@@ -683,7 +686,7 @@ namespace USFMToolsSharp.Renderers.HTML
                     break;
                 case ILIMarker iliMarker:
                     output.AppendLine($"<div class=\"list-{iliMarker.Depth}\">");
-                    foreach (Marker marker in input.Contents)
+                    foreach (var marker in input.Contents)
                     {
                         RenderMarker(marker, output, markerStack);
                     }
@@ -691,7 +694,7 @@ namespace USFMToolsSharp.Renderers.HTML
                     break;
                 case IMIMarker iMIMarker:
                     output.Append($"<div class=\"intro-para-flush-indent\">");
-                    foreach (Marker marker in input.Contents)
+                    foreach (var marker in input.Contents)
                     {
                         RenderMarker(marker, output, markerStack);
                     }
@@ -702,7 +705,7 @@ namespace USFMToolsSharp.Renderers.HTML
                     break;
                 case IOMarker ioMarker:
                     output.AppendLine($"<div class=\"outline-entry-{ioMarker.Depth}\">");
-                    foreach (Marker marker in input.Contents)
+                    foreach (var marker in input.Contents)
                     {
                         RenderMarker(marker, output, markerStack);
                     }
@@ -710,7 +713,7 @@ namespace USFMToolsSharp.Renderers.HTML
                     break;
                 case IPQMarker iPQMarker:
                     output.Append($"<div class=\"intro-quote-indent\">");
-                    foreach (Marker marker in input.Contents)
+                    foreach (var marker in input.Contents)
                     {
                         RenderMarker(marker, output, markerStack);
                     }
@@ -718,7 +721,7 @@ namespace USFMToolsSharp.Renderers.HTML
                     break;
                 case IMQMarker iMQMarker:
                     output.Append($"<div class=\"intro-quote-flush\">");
-                    foreach (Marker marker in input.Contents)
+                    foreach (var marker in input.Contents)
                     {
                         RenderMarker(marker, output, markerStack);
                     }
@@ -726,7 +729,7 @@ namespace USFMToolsSharp.Renderers.HTML
                     break;
                 case IORMarker iorMarker:
                     output.AppendLine($"<span class=\"outline-ref\">");
-                    foreach (Marker marker in input.Contents)
+                    foreach (var marker in input.Contents)
                     {
                         RenderMarker(marker, output, markerStack);
                     }
@@ -734,7 +737,7 @@ namespace USFMToolsSharp.Renderers.HTML
                     break;
                 case IPRMarker iPRMarker:
                     output.Append($"<div class=\"intro-right-align\">");
-                    foreach (Marker marker in input.Contents)
+                    foreach (var marker in input.Contents)
                     {
                         RenderMarker(marker, output, markerStack);
                     }
@@ -774,7 +777,7 @@ namespace USFMToolsSharp.Renderers.HTML
                 case USFMMarker _:
                     break;
                 default:
-                    UnrenderableTags.Add(input.Identifier);
+                    UnrenderableTags.Add(input.Marker.Identifier);
                     break;
             }
             markerStack.Pop();
