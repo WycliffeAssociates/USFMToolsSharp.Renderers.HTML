@@ -702,7 +702,7 @@ namespace USFMToolsSharp.Renderers.HTML
                     break;
                 case MIMarker mIMarker:
                     output.Append($"<div class=\"para-flush-indent\">");
-                    foreach (Marker marker in input.Contents)
+                    foreach (var marker in input.Contents)
                     {
                         RenderMarker(marker, output, markerStack);
                     }
