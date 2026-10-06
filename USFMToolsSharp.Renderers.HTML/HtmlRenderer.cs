@@ -700,6 +700,14 @@ namespace USFMToolsSharp.Renderers.HTML
                     }
                     output.AppendLine("</div>");
                     break;
+                case MIMarker mIMarker:
+                    output.Append($"<div class=\"para-flush-indent\">");
+                    foreach (var marker in input.Contents)
+                    {
+                        RenderMarker(marker, output, markerStack);
+                    }
+                    output.AppendLine("</div>");
+                    break;
                 case IOTMarker iotMarker:
                     output.AppendLine($"<div class=\"outline-title\">{iotMarker.Title}</div>");
                     break;
