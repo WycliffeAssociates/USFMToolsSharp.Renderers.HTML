@@ -126,6 +126,14 @@ namespace USFMToolsSharpTest
             Assert.IsTrue(result.Contains("<div class=\"para-flush-indent\">”Lorem ipsum dolor sit amet, consectetur adipiscing elit!”</div>"), result);
         }
         [Test]
+        public void TestMIRender()
+        {
+            // Indented Flush Paragraph
+            Assert.AreEqual("<div class=\"para-flush-indent\">Some indented flush text.</div>", WrapTest("\\mi Some indented flush text."));
+            string result = WrapTest("\\v 12 Foo bar bat:\n\\mi ”Lorem ipsum dolor sit amet, consectetur adipiscing elit!”\n");
+            Assert.IsTrue(result.Contains("<div class=\"para-flush-indent\">”Lorem ipsum dolor sit amet, consectetur adipiscing elit!”</div>"), result);
+        }
+        [Test]
         public void TestFootnoteRender()
         {
             // Footnote Caller - Text - Alternate Translation
